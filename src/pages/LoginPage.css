@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
+
+.login-wrapper {
+  height: 80%;
+  display: flex;
+  align-items: center;
+}
+
+p {
+  font-family: "Roboto Flex", sans-serif;
+  font-size: 14px;
+}
+
+h2,
+h4 {
+  font-family: "Roboto Flex", sans-serif;
+  color: #0f4c75;
+}
+
+.login {
+  display: grid;
+  grid-template-columns: 380px;
+  width: 100%;
+  height: 460px;
+  justify-content: center;
+}
+
+.reset-pass-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Roboto Flex", sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+}
+.pass-text-wrapper,
+.email-text-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.line-break {
+  height: 1px;
+  width: 160px;
+  background-color: grey;
+}
+
+.divider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email-input,
+.pass-input {
+  border: 1px solid #0f4c75;
+  font-size: 14px;
+  border-radius: 4px;
+  margin: 4px 0;
+  padding: 8px 16px;
+  max-height: 26px;
+}

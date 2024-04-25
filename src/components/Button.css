@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
+
+.normal-button {
+  text-decoration: none;
+  position: relative;
+  border: none;
+  font-size: 14px;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  color: #fff;
+  /* width: 8em; */
+  width: auto;
+  min-width: 8em;
+  height: 3em;
+  line-height: 2em;
+  text-align: center;
+  background: #0f4c75;
+  background-size: 300%;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.outlined-button {
+  text-decoration: none;
+  position: relative;
+  font-size: 14px;
+  font-family: "Roboto Flex", sans-serif;
+  cursor: pointer;
+  color: #0f4c75;
+  /* width: 8em; */
+  width: auto;
+  min-width: 8em;
+  height: 3em;
+  line-height: 2em;
+  text-align: center;
+  background: #fff;
+  background-size: 300%;
+  border-radius: 8px;
+  z-index: 1;
+  border: 1px solid #0f4c75;
+}

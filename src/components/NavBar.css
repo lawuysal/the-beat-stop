@@ -1,0 +1,19 @@
+ul {
+  list-style-type: none;
+  list-style: none;
+  padding-inline-start: 0;
+  display: flex;
+  gap: 3rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4rem;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 0.75rem;
+}

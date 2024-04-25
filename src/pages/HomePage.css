@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.slogan {
+  font-size: 2rem;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 500;
+  color: #0f4c75;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}

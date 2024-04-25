@@ -1,0 +1,17 @@
+.slogan {
+  font-size: 32px;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 500;
+  color: #0f4c75;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}
+
+.plans-wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
