@@ -87,3 +87,8 @@ h4 {
 .hidden {
   display: none;
 }
+
+.error-text {
+  color: red;
+  font-size: 0.8rem;
+}

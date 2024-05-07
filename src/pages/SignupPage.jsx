@@ -2,8 +2,9 @@ import NavBar from "../components/NavBar";
 import "./../pages/SignupPage.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Alert } from "bootstrap";
 
 // {
 //   "username": "jane_smith",
@@ -21,24 +22,43 @@ import { useParams } from "react-router-dom";
 
 const SignupPage = () => {
   const [username, setUsername] = useState("");
+  const [isValidUsername, setIsValidUsername] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isValidName, setIsValidName] = useState(true);
   const [email, setEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const [password, setPassword] = useState("");
+  const [isValidPassword, setIsValidPassword] = useState(true);
   const { membership } = useParams();
 
   async function handleSubmit(e) {
-    e.preventDefault;
-
-    const postBody = {
-      username: username,
-      name: `${firstName} ${lastName}`,
-      email: email,
-      password: password,
-      membership: membership,
-    };
-
     try {
+      e.preventDefault;
+
+      checkValidation();
+
+      if (!isValidUsername) {
+        throw new Error("Username is not valid.");
+      }
+      if (!isValidEmail) {
+        throw new Error("Email is not valid.");
+      }
+      if (!isValidPassword) {
+        throw new Error("Password is not valid.");
+      }
+      if (!isValidName) {
+        throw new Error("Name is not valid.");
+      }
+
+      const postBody = {
+        username: username,
+        name: `${firstName} ${lastName}`,
+        email: email,
+        password: password,
+        membership: membership,
+      };
+
       const res = await fetch("http://127.0.0.1:3001/api/v1/users/", {
         method: "post",
         headers: {
@@ -49,6 +69,65 @@ const SignupPage = () => {
 
       const data = await res.json();
       console.log(data);
+    } catch (err) {
+      //alert(err.message);
+      console.log(err);
+    }
+  }
+
+  async function checkValidation() {
+    setIsValidEmail(false);
+    setIsValidName(false);
+    setIsValidPassword(false);
+    setIsValidUsername(false);
+    try {
+      // Checks if the username is short, long or dublicate
+      if (username.length > 3 && username.length < 16) {
+        const usernameRes = await fetch(
+          `http://127.0.0.1:3001/api/v1/users/?username=${username}`
+        );
+
+        const usernameData = await usernameRes.json();
+        console.log(usernameData.data.users.length > 0);
+
+        if (usernameData.data.users.length > 0) {
+          setIsValidUsername(false);
+        } else {
+          setIsValidUsername(true);
+        }
+        console.log(isValidUsername);
+      }
+
+      // Checks if the email is valid
+      if (email.length >= 12) {
+        const emailRes = await fetch(
+          `http://127.0.0.1:3001/api/v1/users/?username=${email}`
+        );
+        const emailData = await emailRes.json();
+        if (emailData.data.users.length > 0) {
+          setIsValidEmail(false);
+        } else {
+          setIsValidEmail(true);
+        }
+        console.log(isValidEmail);
+      }
+
+      if (password.length >= 6 && password.length <= 25) {
+        setIsValidPassword(true);
+      } else {
+        setIsValidPassword(false);
+      }
+
+      if (
+        firstName.length > 2 &&
+        firstName.length < 25 &&
+        lastName.length > 2 &&
+        lastName.length < 25
+      ) {
+        setIsValidName(true);
+      } else {
+        setIsValidName(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -72,6 +151,14 @@ const SignupPage = () => {
               <InputBox type="text" callback={setUsername}>
                 Username
               </InputBox>
+              {isValidUsername ? (
+                <div></div>
+              ) : (
+                <>
+                  <p className="error-text">⛔ Username is not valid.</p>
+                  <br />
+                </>
+              )}
               <div className="name">
                 <InputBox type="text" callback={setFirstName}>
                   First name
@@ -80,12 +167,40 @@ const SignupPage = () => {
                   Last name
                 </InputBox>
               </div>
-              <InputBox type="email" callback={setEmail}>
-                Email
-              </InputBox>
-              <InputBox type="password" callback={setPassword}>
-                Password
-              </InputBox>
+              {isValidName ? (
+                <div></div>
+              ) : (
+                <>
+                  <p className="error-text">⛔ Name is not valid.</p>
+                  <br />
+                </>
+              )}
+              <>
+                <InputBox type="email" callback={setEmail}>
+                  Email
+                </InputBox>
+                {isValidEmail ? (
+                  <div></div>
+                ) : (
+                  <>
+                    <p className="error-text">⛔ Email is not valid.</p>
+                    <br />
+                  </>
+                )}
+              </>
+              <>
+                <InputBox type="password" callback={setPassword}>
+                  Password
+                </InputBox>
+                {isValidPassword ? (
+                  <div></div>
+                ) : (
+                  <>
+                    <p className="error-text">⛔ Password is not valid.</p>
+                    <br />
+                  </>
+                )}
+              </>
             </div>
             <div className="checkbox-wrapper">
               <input type="checkbox" name="get-emails" id="chk-1" />
