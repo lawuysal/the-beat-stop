@@ -26,7 +26,7 @@ const PlanCard = ({ name, detail, price, paymentDetail, content }) => {
               ))}
             </div>
           </ul>
-          <Button text="Select Plan" type="normal-button button"></Button>
+          <Button type="normal-button button">Select Plan</Button>
         </div>
       </div>
     </>

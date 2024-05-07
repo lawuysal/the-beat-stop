@@ -10,7 +10,7 @@ function MainPage() {
         <br />
 
         <h1>Search and Find The Beats</h1>
-        <h1>That Fits Your Style</h1>
+        <h1>That Fit Your Style</h1>
       </div>
       <br />
       <br />

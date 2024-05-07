@@ -14,7 +14,7 @@ const SignupPage = () => {
           <h4>
             Have an account? <a href="#">Log In</a>
           </h4>
-          <Button text="Continue with Google" type="outlined-button"></Button>
+          <Button type="outlined-button">Continue with Google</Button>
           <div className="divider">
             <div className="line-break"></div>
             <h4>or</h4>
@@ -32,7 +32,7 @@ const SignupPage = () => {
             <input type="checkbox" name="get-emails" id="chk-1" />
             <p>Get the news, discounts and updates</p>
           </div>
-          <Button text="Log in" type="normal-button"></Button>
+          <Button type="normal-button">Sign up</Button>
         </div>
       </div>
     </>

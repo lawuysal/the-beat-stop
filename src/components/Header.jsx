@@ -1,11 +1,11 @@
 import "./../components/Header.css";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ text }) => {
+const Header = ({ children }) => {
   const navigate = useNavigate();
   return (
     <header className="header-text" onClick={() => navigate("/")}>
-      {text}
+      {children}
     </header>
   );
 };

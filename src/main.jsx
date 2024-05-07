@@ -1,10 +1,7 @@
-// import { React, Suspense, lazy } from "react";
-import React from "react";
-import { Suspense, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
-// import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainPage from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignupPage = lazy(() => import("./pages/SignupPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
@@ -12,7 +9,7 @@ const PricingPage = lazy(() => import("./pages/PricingPage"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage></MainPage>,
+    element: <HomePage></HomePage>,
   },
   {
     path: "pricing/",
