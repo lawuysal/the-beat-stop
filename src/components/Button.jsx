@@ -1,10 +1,8 @@
 import "./../components/Button.css";
-import { useNavigate } from "react-router-dom";
 
-function Button({ children, type, link }) {
-  const navigate = useNavigate();
+function Button({ children, type, submit }) {
   return (
-    <button className={type} onClick={() => navigate(link)}>
+    <button className={type} onClick={(e) => submit(e)}>
       {children}
     </button>
   );

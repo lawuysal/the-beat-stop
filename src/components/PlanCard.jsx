@@ -1,7 +1,10 @@
 import "./../components/PlanCard.css";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
-const PlanCard = ({ name, detail, price, paymentDetail, content }) => {
+function PlanCard({ name, detail, price, paymentDetail, content }) {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="card-wrapper">
@@ -26,11 +29,16 @@ const PlanCard = ({ name, detail, price, paymentDetail, content }) => {
               ))}
             </div>
           </ul>
-          <Button type="normal-button button">Select Plan</Button>
+          <Button
+            type="normal-button button"
+            submit={() => navigate(`/signup/${name.toLowerCase()}`)}
+          >
+            Select Plan
+          </Button>
         </div>
       </div>
     </>
   );
-};
+}
 
 export default PlanCard;

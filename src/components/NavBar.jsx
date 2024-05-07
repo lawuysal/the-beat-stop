@@ -1,13 +1,11 @@
 import "./../components/NavBar.css";
-{
-  /* <Link to={`contacts/1`}>Your Name</Link> */
-}
-
 import Button from "../components/Button";
 import Header from "../components/Header";
 import NavItem from "../components/NavItem";
+import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+function NavBar() {
+  const navigate = useNavigate();
   return (
     <nav className="navbar">
       <Header>The Beat Stop</Header>
@@ -18,15 +16,15 @@ const NavBar = () => {
         <NavItem link="#">About</NavItem>
       </ul>
       <div className="login-buttons">
-        <Button type="normal-button" link="/signup">
+        <Button type="normal-button" submit={() => navigate("/pricing")}>
           Sign Up
         </Button>
-        <Button text="Log In" type="outlined-button" link="/login">
+        <Button type="outlined-button" submit={() => navigate("/login")}>
           Log In
         </Button>
       </div>
     </nav>
   );
-};
+}
 
 export default NavBar;

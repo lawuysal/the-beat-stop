@@ -1,6 +1,7 @@
 import NavBar from "../components/NavBar";
 import "./../pages/LoginPage.css";
 import Button from "../components/Button";
+import InputBox from "../components/InputBox";
 
 const LoginPage = () => {
   return (
@@ -21,14 +22,8 @@ const LoginPage = () => {
             <h4>or</h4>
             <div className="line-break"></div>
           </div>
-          <div className="email-text-wrapper">
-            <p>Email</p>
-          </div>
-          <input type="email" className="email-input" />
-          <div className="pass-text-wrapper">
-            <p>Password</p>
-          </div>
-          <input type="password" className="pass-input" />
+          <InputBox type="email">Email</InputBox>
+          <InputBox type="password">Password</InputBox>
           <div className="reset-pass-wrapper">
             <a href="#">Reset password</a>
           </div>
