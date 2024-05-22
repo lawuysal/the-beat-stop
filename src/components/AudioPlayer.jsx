@@ -1,8 +1,10 @@
 import ReactAudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "./../components/AudioPlayer.css";
+import React from "react";
+import { serverURLs } from "../util/constans";
 
-export default function AudioPlayer() {
+const AudioPlayer = React.forwardRef(function a({ track }, ref) {
   const playerStyle = {
     display: "flex",
     alignItems: "center",
@@ -16,26 +18,33 @@ export default function AudioPlayer() {
   return (
     <div className="player" style={playerStyle}>
       <ReactAudioPlayer
-        // src="https://cdn.freesound.org/previews/731/731352_15857333-lq.mp3"
-        // src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-        src="http://localhost:3001/tracks/6604178ac93ccb58387d3ba4/intro_20-1711580542851.mp3"
-        onPlay={(e) => console.log("onPlay")}
-        // other props here
+        src={track && track.src ? track.src : ""}
+        onPlay={() => console.log("onPlay")}
+        ref={ref}
         header={
           <div className="song-info">
             <img
-              src="https://www.artmajeur.com/medias/standard/r/a/raffaella-carrera/artwork/11011291_50x50.jpg"
+              src={
+                track && track.cover
+                  ? track.cover
+                  : `${serverURLs.BEAT_IMAGES}/default/default-large.jpg`
+              }
               alt="photo"
               style={{ width: "65px", height: "65px" }}
             />
             <div className="texts">
-              <p className="song-name">Song Name</p>
-              <p className="artist-name">Artist Name</p>
+              <p className="song-name">
+                {track && track.songName ? track.songName : "Song Name"}
+              </p>
+              <p className="artist-name">
+                {track && track.artistName ? track.artistName : "Artist Name"}
+              </p>
             </div>
           </div>
         }
-        // layout="horizontal"
       />
     </div>
   );
-}
+});
+
+export default AudioPlayer;

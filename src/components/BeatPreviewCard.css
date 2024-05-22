@@ -24,16 +24,21 @@ img {
 }
 
 .card-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr 15fr;
   align-items: center;
-  justify-content: center;
-  width: 30%;
+  justify-items: center;
+  width: 50%;
   padding: 1rem;
   gap: 1rem;
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid var(--primary-color);
   transition: all 0.3s ease;
+}
+
+.card-container > :last-child {
+  justify-self: start;
 }
 
 .cover-wrapper {
@@ -44,8 +49,12 @@ img {
 }
 
 .beat-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  gap: 1rem;
   margin-top: 0.25rem;
-  flex: 1 1 0%;
 }
 
 .play-button {

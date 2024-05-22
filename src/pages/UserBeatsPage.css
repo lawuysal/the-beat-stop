@@ -5,4 +5,18 @@
   flex-direction: column;
   gap: 20px;
   transition: all 0.3s ease;
+  padding-bottom: 10rem;
+  margin-top: 4rem;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 1rem;
 }
