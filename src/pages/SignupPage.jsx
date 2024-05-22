@@ -4,8 +4,8 @@ import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Alert } from "bootstrap";
 import validator from "validator";
+import { serverURLs } from "../util/constans";
 
 // {
 //   "username": "jane_smith",
@@ -60,7 +60,7 @@ const SignupPage = () => {
         membership: membership,
       };
 
-      const res = await fetch("http://127.0.0.1:3001/api/v1/users/", {
+      const res = await fetch(`${serverURLs.USERS}`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const SignupPage = () => {
       // Checks if the username is short, long or dublicate
       if (username.length > 3 && username.length < 16) {
         const usernameRes = await fetch(
-          `http://127.0.0.1:3001/api/v1/users/?username=${username}`
+          `${serverURLs.USERS}/?username=${username}`
         );
 
         const usernameData = await usernameRes.json();
@@ -101,9 +101,7 @@ const SignupPage = () => {
 
       // Checks if the email is valid
       if (email.length >= 12) {
-        const emailRes = await fetch(
-          `http://127.0.0.1:3001/api/v1/users/?username=${email}`
-        );
+        const emailRes = await fetch(`${serverURLs.USERS}/?username=${email}`);
         const emailData = await emailRes.json();
         if (emailData.data.users.length > 0) {
           setIsValidEmail(false);
