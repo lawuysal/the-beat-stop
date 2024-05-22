@@ -16,7 +16,9 @@ export default function AudioPlayer() {
   return (
     <div className="player" style={playerStyle}>
       <ReactAudioPlayer
-        src="https://cdn.freesound.org/previews/731/731352_15857333-lq.mp3"
+        // src="https://cdn.freesound.org/previews/731/731352_15857333-lq.mp3"
+        // src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        src="http://localhost:3001/tracks/6604178ac93ccb58387d3ba4/intro_20-1711580542851.mp3"
         onPlay={(e) => console.log("onPlay")}
         // other props here
         header={

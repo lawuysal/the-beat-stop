@@ -2,7 +2,7 @@ import NavBar from "../components/NavBar";
 import "./../pages/SignupPage.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import validator from "validator";
 import { serverURLs } from "../util/constans";

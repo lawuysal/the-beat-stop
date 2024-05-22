@@ -8,6 +8,7 @@ import "./main.css";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignupPage = lazy(() => import("./pages/SignupPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
+const UserBeatsPage = lazy(() => import("./pages/UserBeatsPage"));
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LoadingIndicator />}>
         <SignupPage></SignupPage>
+      </Suspense>
+    ),
+  },
+  {
+    path: "user/beats/",
+    element: (
+      <Suspense fallback={<LoadingIndicator />}>
+        <UserBeatsPage></UserBeatsPage>
       </Suspense>
     ),
   },

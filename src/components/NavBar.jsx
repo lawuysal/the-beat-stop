@@ -11,7 +11,7 @@ function NavBar() {
       <Header>The Beat Stop</Header>
       <ul>
         <NavItem link="/">Home</NavItem>
-        <NavItem link="#">Beats</NavItem>
+        <NavItem link="/user/beats">Beats</NavItem>
         <NavItem link="/pricing">Pricing</NavItem>
         <NavItem link="#">About</NavItem>
       </ul>
