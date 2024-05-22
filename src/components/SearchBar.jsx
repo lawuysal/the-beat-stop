@@ -1,6 +1,13 @@
 import "./../components/SearchBar.css";
+import { useEffect, useRef } from "react";
 
 const SearchBar = () => {
+  const searchBarRef = useRef(null);
+
+  useEffect(function () {
+    searchBarRef.current.focus();
+  }, []);
+
   return (
     <div className="searchbar">
       <div className="searchbar-wrapper">
@@ -27,6 +34,7 @@ const SearchBar = () => {
             title="Search"
             role="combobox"
             placeholder="Search Artists, Styles, Producers..."
+            ref={searchBarRef}
           />
         </div>
       </div>

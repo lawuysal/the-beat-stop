@@ -5,6 +5,7 @@ import InputBox from "../components/InputBox";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Alert } from "bootstrap";
+import validator from "validator";
 
 // {
 //   "username": "jane_smith",
@@ -106,13 +107,14 @@ const SignupPage = () => {
         const emailData = await emailRes.json();
         if (emailData.data.users.length > 0) {
           setIsValidEmail(false);
-        } else {
+        } else if (validator.isEmail()) {
           setIsValidEmail(true);
         }
+
         console.log(isValidEmail);
       }
 
-      if (password.length >= 6 && password.length <= 25) {
+      if (validator.isStrongPassword()) {
         setIsValidPassword(true);
       } else {
         setIsValidPassword(false);

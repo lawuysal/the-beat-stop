@@ -1,6 +1,7 @@
 import "./../pages/HomePage.css";
 import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
+import AudioPlayer from "../components/AudioPlayer";
 
 function MainPage() {
   return (
@@ -15,6 +16,7 @@ function MainPage() {
       <br />
       <br />
       <SearchBar></SearchBar>
+      <AudioPlayer></AudioPlayer>
     </>
   );
 }

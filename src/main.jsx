@@ -2,6 +2,9 @@ import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import LoadingIndicator from "./components/LoadingIndicator";
+import "./main.css";
+
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignupPage = lazy(() => import("./pages/SignupPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
@@ -14,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "pricing/",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingIndicator />}>
         <PricingPage />
       </Suspense>
     ),
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
   {
     path: "login/",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingIndicator />}>
         <LoginPage></LoginPage>
       </Suspense>
     ),
@@ -30,7 +33,7 @@ const router = createBrowserRouter([
   {
     path: "signup/:membership",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingIndicator />}>
         <SignupPage></SignupPage>
       </Suspense>
     ),
