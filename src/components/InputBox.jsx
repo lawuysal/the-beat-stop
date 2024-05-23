@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function InputBox({ children, type, callback }) {
+export default function InputBox({ children, type, accept, callback }) {
   const [value, setValue] = useState("");
 
   function handleValue(e) {
@@ -38,6 +38,7 @@ export default function InputBox({ children, type, callback }) {
           type={type}
           style={boxStyle}
           value={value}
+          accept={accept}
           onChange={(e) => handleValue(e)}
         />
       </>

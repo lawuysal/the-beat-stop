@@ -10,8 +10,12 @@ import AudioPlayer from "../components/AudioPlayer";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
 
+import { useNavigate } from "react-router-dom";
+
 const UserBeatsPage = () => {
   const playerRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const [currentBeat, setCurrentBeat] = useState("");
   const [beats, setBeats] = useState([]);
@@ -48,7 +52,12 @@ const UserBeatsPage = () => {
         <div className="beats-page">
           <div className="header">
             <h1 className="beats-page-title">Your Beats:</h1>
-            <Button type="normal-button">Create New Beat</Button>
+            <Button
+              type="normal-button"
+              submit={() => navigate(`/create-beat`)}
+            >
+              Create New Beat
+            </Button>
           </div>
           {beats.map((beat, index) => (
             <BeatPreviewCard
