@@ -18,7 +18,11 @@ const AudioPlayer = React.forwardRef(function a({ track }, ref) {
   return (
     <div className="player" style={playerStyle}>
       <ReactAudioPlayer
-        src={track && track.src ? track.src : ""}
+        src={
+          track && track.src
+            ? track.src
+            : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        }
         onPlay={() => console.log("onPlay")}
         ref={ref}
         header={
@@ -30,7 +34,7 @@ const AudioPlayer = React.forwardRef(function a({ track }, ref) {
                   : `${serverURLs.BEAT_IMAGES}/default/default-large.jpg`
               }
               alt="photo"
-              style={{ width: "65px", height: "65px" }}
+              style={{ width: "65px", height: "65px", objectFit: "scale-down" }}
             />
             <div className="texts">
               <p className="song-name">

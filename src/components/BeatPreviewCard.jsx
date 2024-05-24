@@ -12,6 +12,13 @@ const BeatPreviewCard = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Handle cover photo
+  const photoPath = beat.photo;
+  const coverPath = photoPath
+    .replace("dev-data\\images\\beat-images\\", "")
+    .replace(/\\/g, "/");
+  const cover = `${serverURLs.BEAT_IMAGES}/${coverPath}`;
+
   async function handlePlay() {
     if (currentBeat !== beat._id) {
       setCurrentBeat(`${beat._id}`);
@@ -37,7 +44,7 @@ const BeatPreviewCard = ({
       const newTrack = {
         artistName: userName,
         songName: beat.name,
-        cover: `${serverURLs.BEAT_IMAGES}/default/default-large.jpg`,
+        cover: cover,
         src: exactPath,
       };
 
@@ -58,10 +65,7 @@ const BeatPreviewCard = ({
         <BsFillPauseFill onClick={() => handlePlay()} className="play-button" />
       )}
       <div className="cover-wrapper">
-        <img
-          src={`${serverURLs.BEAT_IMAGES}/default/default-large.jpg`}
-          alt="kljlk"
-        />
+        <img src={cover} alt="kljlk" id="cover-image" />
       </div>
       <div className="beat-info">
         <h3>{beat.name}</h3>

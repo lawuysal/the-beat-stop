@@ -46,20 +46,16 @@ const UserBeatsPage = () => {
   }, []);
   return (
     <>
-      <NavBar></NavBar>
-
-      {!isBeatsLoading ? (
-        <div className="beats-page">
-          <div className="header">
-            <h1 className="beats-page-title">Your Beats:</h1>
-            <Button
-              type="normal-button"
-              submit={() => navigate(`/create-beat`)}
-            >
-              Create New Beat
-            </Button>
-          </div>
-          {beats.map((beat, index) => (
+      <NavBar></NavBar>(
+      <div className="beats-page">
+        <div className="header">
+          <h1 className="beats-page-title">Your Beats:</h1>
+          <Button type="normal-button" submit={() => navigate(`/create-beat`)}>
+            Create New Beat
+          </Button>
+        </div>
+        {!isBeatsLoading ? (
+          beats.map((beat, index) => (
             <BeatPreviewCard
               key={index}
               beat={beat}
@@ -68,12 +64,12 @@ const UserBeatsPage = () => {
               setPlayerTrack={setPlayerTrack}
               onPlayPause={handlePlayPause}
             />
-          ))}
-        </div>
-      ) : (
-        <LoadingIndicator></LoadingIndicator>
-      )}
-      <AudioPlayer track={playerTrack} ref={playerRef}></AudioPlayer>
+          ))
+        ) : (
+          <LoadingIndicator></LoadingIndicator>
+        )}
+      </div>
+      )<AudioPlayer track={playerTrack} ref={playerRef}></AudioPlayer>
     </>
   );
 };

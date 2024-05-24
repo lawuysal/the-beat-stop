@@ -44,8 +44,14 @@ img {
 .cover-wrapper {
   display: flex;
   border-radius: 10px;
-  padding: 1rem;
+
   border: 1px solid var(--primary-color);
+}
+
+#cover-image {
+  width: 65px;
+  height: 65px;
+  object-fit: scale-down;
 }
 
 .beat-info {
