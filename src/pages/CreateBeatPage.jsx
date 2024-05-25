@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import validator from "validator";
 
 import { useReducer } from "react";
+import { serverURLs } from "../util/constans";
 
 export default function CreateBeatPage() {
   const initialDataState = {
@@ -14,34 +15,34 @@ export default function CreateBeatPage() {
     key: "",
     bpm: "",
     license: "free",
-    image: "",
-    audio: "",
+    photo: undefined,
+    fullTrack: undefined,
   };
 
   const initialValidationState = {
     name: {
-      isValid: true,
+      isValid: false,
       message: "Name must be between 3 and 20 characters",
     },
     summary: {
-      isValid: true,
+      isValid: false,
       message: "Summary must be between 3 and 50 characters",
     },
     type: {
-      isValid: true,
+      isValid: false,
       message: "Type must be between 3 and 100 characters",
     },
-    key: { isValid: true, message: "Key must be between 2 and 15 characters" },
+    key: { isValid: false, message: "Key must be between 2 and 15 characters" },
     bpm: {
-      isValid: true,
+      isValid: false,
       message: "BPM must be a whole number between 50-250",
     },
     license: {
       isValid: true,
       message: "License must be free, basic, standard, or pro",
     },
-    image: { isValid: true, message: "Photo must be choosen" },
-    audio: { isValid: true, message: "Track must be choosen" },
+    photo: { isValid: false, message: "Photo must be choosen" },
+    fullTrack: { isValid: false, message: "Track must be choosen" },
   };
 
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
@@ -64,10 +65,10 @@ export default function CreateBeatPage() {
         return { ...state, bpm: action.value };
       case "license":
         return { ...state, license: action.value };
-      case "image":
-        return { ...state, image: action.value };
-      case "audio":
-        return { ...state, audio: action.value };
+      case "photo":
+        return { ...state, photo: action.value };
+      case "fullTrack":
+        return { ...state, fullTrack: action.value };
       default:
         return state;
     }
@@ -119,18 +120,18 @@ export default function CreateBeatPage() {
             ),
           },
         };
-      case "image":
+      case "photo":
         return {
           ...state,
-          image: {
-            isValid: action.value !== "",
+          photo: {
+            isValid: action.value !== undefined,
           },
         };
-      case "audio":
+      case "fullTrack":
         return {
           ...state,
-          audio: {
-            isValid: action.value !== "",
+          fullTrack: {
+            isValid: action.value !== undefined,
           },
         };
       default:
@@ -140,34 +141,22 @@ export default function CreateBeatPage() {
 
   function handleName(value) {
     validationDispatch({ type: "name", value: value });
-
-    if (validationState.name.isValid) {
-      dataDispatch({ type: "name", value: value });
-    }
+    dataDispatch({ type: "name", value: value });
   }
 
   function handleSummary(value) {
     validationDispatch({ type: "summary", value: value });
-
-    if (validationState.summary.isValid) {
-      dataDispatch({ type: "summary", value: value });
-    }
+    dataDispatch({ type: "summary", value: value });
   }
 
   function handleType(value) {
     validationDispatch({ type: "type", value: value });
-
-    if (validationState.type.isValid) {
-      dataDispatch({ type: "type", value: value });
-    }
+    dataDispatch({ type: "type", value: value });
   }
 
   function handleKey(value) {
     validationDispatch({ type: "key", value: value });
-
-    if (validationState.key.isValid) {
-      dataDispatch({ type: "key", value: value });
-    }
+    dataDispatch({ type: "key", value: value });
   }
 
   function handleBPM(value) {
@@ -178,44 +167,50 @@ export default function CreateBeatPage() {
   function handleLicense(e) {
     e.preventDefault();
     validationDispatch({ type: "license", value: e.target.value });
-
-    if (validationState.license.isValid) {
-      dataDispatch({ type: "license", value: e.target.value });
-    }
+    dataDispatch({ type: "license", value: e.target.value });
   }
 
-  function handleImage(value) {
-    validationDispatch({ type: "image", value: value });
-
-    if (validationState.image.isValid) {
-      dataDispatch({ type: "image", value: value });
-    }
+  function handlephoto(value) {
+    validationDispatch({ type: "photo", value: value });
+    dataDispatch({ type: "photo", value: value });
   }
 
-  function handleAudio(value) {
-    validationDispatch({ type: "audio", value: value });
-
-    if (validationState.audio.isValid) {
-      dataDispatch({ type: "audio", value: value });
-    }
+  function handlefullTrack(value) {
+    validationDispatch({ type: "fullTrack", value: value });
+    dataDispatch({ type: "fullTrack", value: value });
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     validationDispatch({ type: "name", value: dataState.name });
     validationDispatch({ type: "summary", value: dataState.summary });
     validationDispatch({ type: "type", value: dataState.type });
     validationDispatch({ type: "key", value: dataState.key });
     validationDispatch({ type: "bpm", value: dataState.bpm });
     validationDispatch({ type: "license", value: dataState.license });
-    validationDispatch({ type: "image", value: dataState.image });
-    validationDispatch({ type: "audio", value: dataState.audio });
+    validationDispatch({ type: "photo", value: dataState.photo });
+    validationDispatch({ type: "fullTrack", value: dataState.fullTrack });
 
     const allFieldsValid = Object.values(validationState).every(
       (field) => field.isValid
     );
 
     if (allFieldsValid) {
-      console.log(dataState);
+      console.log("All fields are valid");
+      const formData = new FormData();
+
+      formData.append("owner", "6604178ac93ccb58387d3ba4");
+
+      // File appending must be come after other fields
+      for (const key in dataState) {
+        formData.append(key, dataState[key]);
+      }
+
+      const res = await fetch(`${serverURLs.BEATS}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log(res);
     } else {
       console.log("Some fields are invalid");
     }
@@ -263,14 +258,14 @@ export default function CreateBeatPage() {
         <InputBox
           type="file"
           accept="image/*"
-          callback={handleImage}
-          error={validationState.image}
+          callback={handlephoto}
+          error={validationState.photo}
         ></InputBox>
         <InputBox
           type="file"
           accept="audio/*"
-          callback={handleAudio}
-          error={validationState.audio}
+          callback={handlefullTrack}
+          error={validationState.fullTrack}
         ></InputBox>
         <Button type="normal-button" submit={handleSubmit}>
           Create Beat

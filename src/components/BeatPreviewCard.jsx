@@ -9,6 +9,7 @@ const BeatPreviewCard = ({
   setCurrentBeat,
   setPlayerTrack,
   onPlayPause,
+  navigate,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -58,7 +59,7 @@ const BeatPreviewCard = ({
   }
 
   return (
-    <div className="card-container">
+    <div className="card-container" onClick={navigate}>
       {!isPlaying || currentBeat !== beat._id ? (
         <BsFillPlayFill onClick={() => handlePlay()} className="play-button" />
       ) : (

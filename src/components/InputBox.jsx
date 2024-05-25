@@ -9,8 +9,14 @@ export default function InputBox({ children, type, accept, callback, error }) {
 
   function handleValue(e) {
     e.preventDefault();
-    setValue(e.target.value);
-    callback?.(e.target.value);
+
+    if (type === "file") {
+      const file = e.target.files[0];
+      callback?.(file);
+    } else {
+      setValue(e.target.value);
+      callback?.(e.target.value);
+    }
   }
 
   useEffect(() => {
@@ -47,7 +53,7 @@ export default function InputBox({ children, type, accept, callback, error }) {
         <input
           type={type}
           style={boxStyle}
-          value={value}
+          value={type === "file" ? undefined : value}
           accept={accept}
           onChange={(e) => handleValue(e)}
         />
