@@ -10,6 +10,7 @@ const SignupPage = lazy(() => import("./pages/SignupPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const UserBeatsPage = lazy(() => import("./pages/UserBeatsPage"));
 const CreateBeatPage = lazy(() => import("./pages/CreateBeatPage"));
+const BeatDetailedPage = lazy(() => import("./pages/BeatDetailedPage"));
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LoadingIndicator />}>
         <CreateBeatPage></CreateBeatPage>
+      </Suspense>
+    ),
+  },
+  {
+    path: "beats/:beatId",
+    element: (
+      <Suspense fallback={<LoadingIndicator />}>
+        <BeatDetailedPage></BeatDetailedPage>
       </Suspense>
     ),
   },

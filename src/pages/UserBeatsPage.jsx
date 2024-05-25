@@ -1,16 +1,14 @@
 import("./UserBeatsPage.css");
+import { serverURLs } from "../util/constans";
+
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
 import BeatPreviewCard from "../components/BeatPreviewCard";
-
-import { useState, useEffect, useRef } from "react";
-import { serverURLs } from "../util/constans";
 import AudioPlayer from "../components/AudioPlayer";
-
 import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
-
-import { useNavigate } from "react-router-dom";
 
 const UserBeatsPage = () => {
   const playerRef = useRef(null);
@@ -28,6 +26,10 @@ const UserBeatsPage = () => {
     } else {
       playerRef.current.audio.current.play();
     }
+  }
+
+  function handleNavigateDetails(beatId) {
+    navigate(`/beats/${beatId}`);
   }
 
   useEffect(function () {
@@ -63,6 +65,7 @@ const UserBeatsPage = () => {
               setCurrentBeat={setCurrentBeat}
               setPlayerTrack={setPlayerTrack}
               onPlayPause={handlePlayPause}
+              navigate={() => handleNavigateDetails(beat._id)}
             />
           ))
         ) : (
