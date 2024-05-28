@@ -4,6 +4,7 @@ import { serverURLs } from "./../util/constans";
 import { BsFillTrashFill } from "react-icons/bs";
 
 import { useEffect, useState } from "react";
+import LoadingIndicator from "./LoadingIndicator";
 
 function TrackCard({ trackId, beatId }) {
   const [track, setTrack] = useState({
@@ -26,8 +27,7 @@ function TrackCard({ trackId, beatId }) {
       );
 
       if (res.ok) {
-        // window.location.reload();
-        console.log("Track deleted successfully");
+        window.location.reload();
       }
     }
   }
@@ -44,9 +44,9 @@ function TrackCard({ trackId, beatId }) {
           path: track.path,
           fileType: track.fileType,
         });
+        setIsTrackLoading(false);
       }
       fetchTrack();
-      setIsTrackLoading(false);
     },
     [trackId]
   );
@@ -63,7 +63,7 @@ function TrackCard({ trackId, beatId }) {
             ></BsFillTrashFill>
           </span>
         ) : (
-          <p>Loading...</p>
+          <LoadingIndicator></LoadingIndicator>
         )}
       </div>
     </div>

@@ -1,22 +1,24 @@
-import("./CreateBeatPage.css");
-import NavBar from "../components/NavBar";
-import InputBox from "../components/InputBox";
-import Button from "../components/Button";
+import { useReducer, useEffect, useState } from "react";
 import validator from "validator";
+import { useNavigate } from "react-router-dom";
+import { serverURLs } from "./../util/constans";
 
-import { useReducer } from "react";
-import { serverURLs } from "../util/constans";
-
-export default function CreateBeatPage() {
+function useBeat({ beatId }) {
   const initialDataState = {
     name: "",
     summary: "",
+    description: "",
     type: "",
     key: "",
-    bpm: "",
+    owner: "",
+    bpm: "0",
+    createdDate: "",
+    paid: false,
+    tracks: [],
     license: "free",
     photo: undefined,
     fullTrack: undefined,
+    _id: "",
   };
 
   const initialValidationState = {
@@ -27,6 +29,10 @@ export default function CreateBeatPage() {
     summary: {
       isValid: false,
       message: "Summary must be between 3 and 50 characters",
+    },
+    description: {
+      isValid: true,
+      message: "Description must be between 3 and 200 characters",
     },
     type: {
       isValid: false,
@@ -41,15 +47,22 @@ export default function CreateBeatPage() {
       isValid: true,
       message: "License must be free, basic, standard, or pro",
     },
+    paid: {
+      isValid: true,
+      message: "Paid must be true or false",
+    },
     photo: { isValid: false, message: "Photo must be choosen" },
     fullTrack: { isValid: false, message: "Track must be choosen" },
   };
 
+  const navigate = useNavigate();
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
   const [validationState, validationDispatch] = useReducer(
     validationReducer,
     initialValidationState
   );
+  const [isBeatLoading, setIsBeatLoading] = useState(false);
+  const [fetchedTracks, setFetchedTracks] = useState([]);
 
   function dataReducer(state, action) {
     switch (action.type) {
@@ -57,18 +70,24 @@ export default function CreateBeatPage() {
         return { ...state, name: action.value };
       case "summary":
         return { ...state, summary: action.value };
+      case "description":
+        return { ...state, description: action.value };
       case "type":
         return { ...state, type: action.value };
       case "key":
         return { ...state, key: action.value };
       case "bpm":
         return { ...state, bpm: action.value };
+      case "paid":
+        return { ...state, paid: action.value };
       case "license":
         return { ...state, license: action.value };
       case "photo":
         return { ...state, photo: action.value };
       case "fullTrack":
         return { ...state, fullTrack: action.value };
+      case "FETCH_BEAT":
+        return { ...state, ...action.value };
       default:
         return state;
     }
@@ -88,6 +107,13 @@ export default function CreateBeatPage() {
           ...state,
           summary: {
             isValid: validator.isLength(action.value, { min: 3, max: 50 }),
+          },
+        };
+      case "description":
+        return {
+          ...state,
+          description: {
+            isValid: validator.isLength(action.value, { min: 3, max: 200 }),
           },
         };
       case "type":
@@ -118,6 +144,13 @@ export default function CreateBeatPage() {
             isValid: ["free", "basic", "standard", "pro"].includes(
               action.value
             ),
+          },
+        };
+      case "paid":
+        return {
+          ...state,
+          paid: {
+            isValid: !!action.value === true || !!action.value === false,
           },
         };
       case "photo":
@@ -170,112 +203,128 @@ export default function CreateBeatPage() {
     dataDispatch({ type: "license", value: e.target.value });
   }
 
+  function handlePaid(e) {
+    e.preventDefault();
+    validationDispatch({ type: "paid", value: e.target.value });
+    dataDispatch({ type: "paid", value: e.target.value });
+  }
+
   function handlephoto(value) {
     validationDispatch({ type: "photo", value: value });
     dataDispatch({ type: "photo", value: value });
   }
 
-  function handlefullTrack(value) {
+  function handleFullTrack(value) {
     validationDispatch({ type: "fullTrack", value: value });
     dataDispatch({ type: "fullTrack", value: value });
   }
 
-  async function handleSubmit() {
+  function handleDescription(value) {
+    validationDispatch({ type: "description", value: value });
+    dataDispatch({ type: "description", value: value });
+  }
+
+  async function handleBeatUpdate() {
     validationDispatch({ type: "name", value: dataState.name });
     validationDispatch({ type: "summary", value: dataState.summary });
-    validationDispatch({ type: "type", value: dataState.type });
+    validationDispatch({ type: "description", value: dataState.description });
+    validationDispatch({ type: "type", value: dataState.type.toString() });
     validationDispatch({ type: "key", value: dataState.key });
     validationDispatch({ type: "bpm", value: dataState.bpm });
     validationDispatch({ type: "license", value: dataState.license });
-    validationDispatch({ type: "photo", value: dataState.photo });
-    validationDispatch({ type: "fullTrack", value: dataState.fullTrack });
+    validationDispatch({ type: "paid", value: dataState.paid });
 
-    const allFieldsValid = Object.values(validationState).every(
-      (field) => field.isValid
-    );
+    if (
+      validationState.name.isValid &&
+      validationState.summary.isValid &&
+      validationState.description.isValid &&
+      validationState.type.isValid &&
+      validationState.key.isValid &&
+      validationState.bpm.isValid &&
+      validationState.license.isValid &&
+      validationState.paid.isValid
+    ) {
+      const editedFields = {
+        name: dataState.name,
+        summary: dataState.summary,
+        description: dataState.description,
+        type: dataState.type,
+        key: dataState.key,
+        bpm: dataState.bpm,
+        license: dataState.license,
+        paid: dataState.paid,
+      };
 
-    if (allFieldsValid) {
-      console.log("All fields are valid");
-      const formData = new FormData();
+      const editResponse = await fetch(
+        `${serverURLs.BEATS_EDIT_MAIN}/${beatId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedFields),
+        }
+      );
 
-      formData.append("owner", "6604178ac93ccb58387d3ba4");
-
-      // File appending must be come after other fields
-      for (const key in dataState) {
-        formData.append(key, dataState[key]);
+      if (editResponse.ok) {
+        {
+          navigate("/beats/" + beatId);
+        }
       }
-
-      const res = await fetch(`${serverURLs.BEATS}`, {
-        method: "POST",
-        body: formData,
-      });
-
-      console.log(res);
     } else {
-      console.log("Some fields are invalid");
+      alert("Some fields are not valid");
     }
   }
 
-  return (
-    <>
-      <NavBar></NavBar>
-      <div className="create-new-beat-page">
-        <h1>Create a New Beat</h1>
-        <InputBox
-          type="text"
-          callback={(val) => handleName(val)}
-          error={validationState.name}
-        >
-          Name
-        </InputBox>
-        <InputBox
-          type="text"
-          callback={handleSummary}
-          error={validationState.summary}
-        >
-          Summary
-        </InputBox>
-        <InputBox
-          type="text"
-          callback={handleType}
-          error={validationState.type}
-        >
-          Type (You can add multiple types separated by commas)
-        </InputBox>
-        <InputBox type="text" callback={handleKey} error={validationState.key}>
-          Key
-        </InputBox>
-        <InputBox type="text" callback={handleBPM} error={validationState.bpm}>
-          BPM
-        </InputBox>
-        <label>License:</label>
-        <select className="license-dropdown" onChange={handleLicense}>
-          <option value="free">Free</option>
-          <option value="basic">Basic</option>
-          <option value="standard">Standard</option>
-          <option value="pro">Pro</option>
-        </select>
+  useEffect(
+    function () {
+      async function fetchBeat() {
+        setIsBeatLoading(true);
+        const response = await fetch(`${serverURLs.BEATS}/${beatId}`);
+        const data = await response.json();
+        const beat = data.data.beat;
 
-        <InputBox
-          type="file"
-          accept="image/*"
-          callback={handlephoto}
-          error={validationState.photo}
-        >
-          Photo
-        </InputBox>
-        <InputBox
-          type="file"
-          accept="audio/*"
-          callback={handlefullTrack}
-          error={validationState.fullTrack}
-        >
-          Full Track
-        </InputBox>
-        <Button type="normal-button" submit={handleSubmit}>
-          Create Beat
-        </Button>
-      </div>
-    </>
+        if (beat.tracks) {
+          let fTracks = [];
+          for (let i = 0; i < beat.tracks.length; i++) {
+            const trackResponse = await fetch(
+              `${serverURLs.TRACKS}/${beat.tracks[i]}`
+            );
+            const trackData = await trackResponse.json();
+            fTracks.push(trackData.data.data.track);
+          }
+          setFetchedTracks(fTracks);
+        }
+
+        setIsBeatLoading(false);
+        dataDispatch({ type: "FETCH_BEAT", value: beat });
+      }
+      fetchBeat();
+    },
+    [beatId]
   );
+
+  const handleFunctions = {
+    handleName,
+    handleSummary,
+    handleDescription,
+    handleType,
+    handleKey,
+    handleBPM,
+    handleLicense,
+    handlePaid,
+    handlephoto,
+    handleFullTrack,
+    handleBeatUpdate,
+  };
+
+  return {
+    isBeatLoading,
+    dataState,
+    validationState,
+    handleFunctions,
+    fetchedTracks,
+  };
 }
+
+export default useBeat;

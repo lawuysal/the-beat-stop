@@ -1,7 +1,14 @@
 import { useEffect, useState, useRef } from "react";
 
-export default function InputBox({ children, type, accept, callback, error }) {
-  const [value, setValue] = useState("");
+export default function InputBox({
+  children,
+  type,
+  accept,
+  callback,
+  error,
+  preText,
+}) {
+  const [value, setValue] = useState(preText ?? "");
   const errorMessage = useRef(error && error.message ? error.message : "");
   const [isValid, setIsValid] = useState(
     error && error.isValid ? error.isValid : false

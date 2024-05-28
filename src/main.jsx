@@ -11,6 +11,7 @@ const PricingPage = lazy(() => import("./pages/PricingPage"));
 const UserBeatsPage = lazy(() => import("./pages/UserBeatsPage"));
 const CreateBeatPage = lazy(() => import("./pages/CreateBeatPage"));
 const BeatDetailedPage = lazy(() => import("./pages/BeatDetailedPage"));
+const BeatEditPage = lazy(() => import("./pages/BeatEditPage"));
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LoadingIndicator />}>
         <BeatDetailedPage></BeatDetailedPage>
+      </Suspense>
+    ),
+  },
+  {
+    path: "beats/edit/:beatId",
+    element: (
+      <Suspense fallback={<LoadingIndicator />}>
+        <BeatEditPage></BeatEditPage>
       </Suspense>
     ),
   },

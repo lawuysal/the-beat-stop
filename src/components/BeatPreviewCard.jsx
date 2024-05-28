@@ -1,7 +1,10 @@
 import("./BeatPreviewCard.css");
 import { serverURLs } from "./../util/constans";
+import { convertPath } from "../util/convertPath";
+
 import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { useState } from "react";
+import Button from "./Button";
 
 const BeatPreviewCard = ({
   beat,
@@ -15,10 +18,10 @@ const BeatPreviewCard = ({
 
   // Handle cover photo
   const photoPath = beat.photo;
-  const coverPath = photoPath
-    .replace("dev-data\\images\\beat-images\\", "")
-    .replace(/\\/g, "/");
-  const cover = `${serverURLs.BEAT_IMAGES}/${coverPath}`;
+  const cover = `${serverURLs.BEAT_IMAGES}/${convertPath(
+    photoPath,
+    "beatPhoto"
+  )}`;
 
   async function handlePlay() {
     if (currentBeat !== beat._id) {
@@ -29,11 +32,10 @@ const BeatPreviewCard = ({
       const res = await fetch(`${serverURLs.TRACKS}/${beat.fullTrack}`);
       const data = await res.json();
       const track = data.data.data.track;
-      const unfilteredPath = track.path;
-      const path = unfilteredPath
-        .replace("dev-data\\tracks\\", "")
-        .replace(/\\/g, "/");
-      const exactPath = `${serverURLs.TRACK_FILES}/${path}`;
+      const path = `${serverURLs.TRACK_FILES}/${convertPath(
+        track.path,
+        "track"
+      )}`;
 
       // Get user info
       const userRes = await fetch(`${serverURLs.USERS}/${beat.owner}`);
@@ -46,7 +48,7 @@ const BeatPreviewCard = ({
         artistName: userName,
         songName: beat.name,
         cover: cover,
-        src: exactPath,
+        src: path,
       };
 
       setPlayerTrack(newTrack);
@@ -59,7 +61,7 @@ const BeatPreviewCard = ({
   }
 
   return (
-    <div className="card-container" onClick={navigate}>
+    <div className="card-container">
       {!isPlaying || currentBeat !== beat._id ? (
         <BsFillPlayFill onClick={() => handlePlay()} className="play-button" />
       ) : (
@@ -71,6 +73,9 @@ const BeatPreviewCard = ({
       <div className="beat-info">
         <h3>{beat.name}</h3>
         <p>{`"${beat.summary}"`}</p>
+        <Button type="outlined-button" submit={navigate}>
+          Details
+        </Button>
       </div>
     </div>
   );

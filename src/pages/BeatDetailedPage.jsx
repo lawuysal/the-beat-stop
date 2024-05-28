@@ -1,10 +1,12 @@
-import("./BeatDetailedPage.css");
+import classes from "./BeatDetailedPage.module.css";
 
 import { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { serverURLs } from "./../util/constans";
+import { convertPath } from "../util/convertPath";
+
 import NavBar from "./../components/NavBar";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
@@ -48,6 +50,10 @@ function BeatDetailedPage() {
       default:
         return state;
     }
+  }
+
+  function handleBeatEdit() {
+    navigate(`/beats/edit/${beatId}`);
   }
 
   async function handleBeatDelete() {
@@ -99,6 +105,7 @@ function BeatDetailedPage() {
         setTrackFile(undefined);
         setIsAddTrackMode(false);
         beatDispatch({ type: "FETCH_BEAT", payload: newBeat });
+        window.location.reload();
       }
     }
     setTrackFileError({ isValid: false, message: "Track must be choosen" });
@@ -137,8 +144,15 @@ function BeatDetailedPage() {
     <>
       <NavBar></NavBar>
       {!isBeatLoading ? (
-        <div className="detailed-page">
+        <div className={`${classes.detailedPage}`}>
           <h1>Beat Detailed Page</h1>
+          <img
+            src={`${serverURLs.BEAT_IMAGES}/${convertPath(
+              beatState.photo,
+              "beatPhoto"
+            )}`}
+            alt=""
+          />
           <p>Name: {`${beatState.name}`}</p>
           <p>Summary: {`${beatState.summary}`}</p>
           <p>Description: {`${beatState.description}`} </p>
@@ -179,6 +193,9 @@ function BeatDetailedPage() {
 
           <Button type="normal-button" submit={handleBeatDelete}>
             Delete Beat
+          </Button>
+          <Button type="normal-button" submit={handleBeatEdit}>
+            Edit Beat
           </Button>
         </div>
       ) : (
