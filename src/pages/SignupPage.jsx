@@ -2,140 +2,204 @@ import NavBar from "../components/NavBar";
 import "./../pages/SignupPage.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import { useState } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import validator from "validator";
 import { serverURLs } from "../util/constans";
 
-// {
-//   "username": "jane_smith",
-//   "name": "Jane Smith",
-//   "email": "jane.smith@example.com",
-//   "password": "password456",
-//   "role": "admin",
-//   "photo": "images/avatar-002.jpg",
-//   "description": "none",
-//   "age": "25",
-//   "gender": "female",
-//   "membership": "premium",
-//   "lastMonthSale": false
-// }
-
 const SignupPage = () => {
-  const [username, setUsername] = useState("");
-  const [isValidUsername, setIsValidUsername] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [isValidName, setIsValidName] = useState(true);
-  const [email, setEmail] = useState("");
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const [password, setPassword] = useState("");
-  const [isValidPassword, setIsValidPassword] = useState(true);
-  const { membership } = useParams();
+  const initialDataState = {
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    membership: "free",
+    mailList: false,
+  };
 
-  async function handleSubmit(e) {
-    try {
-      e.preventDefault;
+  const initialValidationState = {
+    username: {
+      isValid: false,
+      message: "Name must be between 3 and 20 characters",
+    },
+    name: {
+      isValid: false,
+      message: "Name must be between 3 and 20 characters",
+    },
+    email: { isValid: false, message: "Email is not valid" },
+    password: { isValid: false, message: "Password is not valid" },
+    passwordConfirm: { isValid: false, message: "Passwords do not match" },
+    membership: { isValid: true, message: "" },
+    mailList: { isValid: true, message: "" },
+  };
 
-      checkValidation();
+  const [emailExists, setEmailExists] = useState(false);
+  const [usernameExists, setUsernameExists] = useState(false);
+  const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
+  const [validationState, validationDispatch] = useReducer(
+    validationReducer,
+    initialValidationState
+  );
 
-      if (!isValidUsername) {
-        throw new Error("Username is not valid.");
-      }
-      if (!isValidEmail) {
-        throw new Error("Email is not valid.");
-      }
-      if (!isValidPassword) {
-        throw new Error("Password is not valid.");
-      }
-      if (!isValidName) {
-        throw new Error("Name is not valid.");
-      }
-
-      const postBody = {
-        username: username,
-        name: `${firstName} ${lastName}`,
-        email: email,
-        password: password,
-        membership: membership,
-      };
-
-      const res = await fetch(`${serverURLs.USERS}`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postBody),
-      });
-
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      //alert(err.message);
-      console.log(err);
+  function dataReducer(state, action) {
+    switch (action.type) {
+      case "username":
+        return { ...state, username: action.value };
+      case "name":
+        return { ...state, name: action.value };
+      case "email":
+        return { ...state, email: action.value };
+      case "password":
+        return { ...state, password: action.value };
+      case "passwordConfirm":
+        return { ...state, passwordConfirm: action.value };
+      case "membership":
+        return { ...state, membership: action.value };
+      case "mailList":
+        return { ...state, mailList: action.value };
+      default:
+        return state;
     }
   }
 
-  async function checkValidation() {
-    setIsValidEmail(false);
-    setIsValidName(false);
-    setIsValidPassword(false);
-    setIsValidUsername(false);
-    try {
-      // Checks if the username is short, long or dublicate
-      if (username.length > 3 && username.length < 16) {
-        const usernameRes = await fetch(
-          `${serverURLs.USERS}/?username=${username}`
-        );
+  function validationReducer(state, action) {
+    switch (action.type) {
+      case "username":
+        return {
+          ...state,
+          username: {
+            isValid: validator.isLength(action.value, { min: 3, max: 20 }),
+          },
+        };
+      case "username-dublicate":
+        return {
+          ...state,
+          username: {
+            isValid: action.value,
+          },
+        };
+      case "name":
+        return {
+          ...state,
+          name: {
+            isValid: validator.isLength(action.value, { min: 3, max: 20 }),
+          },
+        };
+      case "email":
+        return {
+          ...state,
+          email: {
+            isValid: validator.isEmail(action.value),
+          },
+        };
+      case "email-dublicate":
+        return {
+          ...state,
+          email: {
+            isValid: action.value,
+          },
+        };
+      case "password":
+        return {
+          ...state,
+          password: {
+            isValid: validator.isLength(action.value, { min: 8, max: 20 }),
+          },
+        };
+      case "passwordConfirm":
+        return {
+          ...state,
+          passwordConfirm: {
+            isValid: action.value === dataState.password,
+          },
+        };
+      case "membership":
+        return { ...state, membership: { isValid: true } };
+      case "mailList":
+        return {
+          ...state,
+          mailList: {
+            isValid: action.value === true || action.value === false,
+          },
+        };
+      default:
+        return state;
+    }
+  }
 
-        const usernameData = await usernameRes.json();
-        console.log(usernameData.data.users.length > 0);
+  function handleUsername(value) {
+    validationDispatch({ type: "username", value: value });
+    dataDispatch({ type: "username", value: value });
+  }
+  function handleName(value) {
+    validationDispatch({ type: "name", value: value });
+    dataDispatch({ type: "name", value: value });
+  }
+  function handleEmail(value) {
+    validationDispatch({ type: "email", value: value });
+    dataDispatch({ type: "email", value: value });
+  }
+  function handlePassword(value) {
+    validationDispatch({ type: "password", value: value });
+    dataDispatch({ type: "password", value: value });
+  }
+  function handlePasswordConfirm(value) {
+    validationDispatch({ type: "passwordConfirm", value: value });
+    dataDispatch({ type: "passwordConfirm", value: value });
+  }
+  function handleMembership(value) {
+    validationDispatch({ type: "membership", value: value });
+    dataDispatch({ type: "membership", value: value });
+  }
+  function handleMailList(value) {
+    validationDispatch({ type: "mailList", value: value });
+    dataDispatch({ type: "mailList", value: value });
+  }
 
-        if (usernameData.data.users.length > 0) {
-          setIsValidUsername(false);
-        } else {
-          setIsValidUsername(true);
-        }
-        console.log(isValidUsername);
-      }
+  async function handleDublicateEmail() {
+    const res = await fetch(
+      `${serverURLs.USERS_CHECK_EMAIL}/${dataState.email}`
+    );
+    const data = await res.json();
+    console.log(data.exists, "email");
+    setEmailExists(data.exists);
+  }
 
-      // Checks if the email is valid
-      if (email.length >= 12) {
-        const emailRes = await fetch(`${serverURLs.USERS}/?username=${email}`);
-        const emailData = await emailRes.json();
-        if (emailData.data.users.length > 0) {
-          setIsValidEmail(false);
-        } else if (validator.isEmail()) {
-          setIsValidEmail(true);
-        }
+  async function handleDublicateUsername() {
+    const res = await fetch(
+      `${serverURLs.USERS_CHECK_USERNAME}/${dataState.username}`
+    );
+    const data = await res.json();
+    console.log(data.exists, "username");
+    setUsernameExists(data.exists);
+  }
 
-        console.log(isValidEmail);
-      }
+  async function handleSignup() {
+    await handleDublicateEmail();
+    await handleDublicateUsername();
 
-      if (validator.isStrongPassword()) {
-        setIsValidPassword(true);
-      } else {
-        setIsValidPassword(false);
-      }
+    validationDispatch({ type: "username", value: dataState.username });
+    validationDispatch({ type: "name", value: dataState.name });
+    validationDispatch({ type: "email", value: dataState.email });
+    validationDispatch({ type: "password", value: dataState.password });
+    validationDispatch({
+      type: "passwordConfirm",
+      value: dataState.passwordConfirm,
+    });
 
-      if (
-        firstName.length > 2 &&
-        firstName.length < 25 &&
-        lastName.length > 2 &&
-        lastName.length < 25
-      ) {
-        setIsValidName(true);
-      } else {
-        setIsValidName(false);
-      }
-    } catch (err) {
-      console.log(err);
+    console.log(usernameExists, emailExists);
+
+    if (usernameExists) {
+      validationDispatch({ type: "username-dublicate", value: false });
+    }
+    if (emailExists) {
+      validationDispatch({ type: "email-dublicate", value: false });
     }
   }
 
   return (
     <>
-      <NavBar></NavBar>
       <br />
       <br />
       <div className="signup-wrapper">
@@ -148,77 +212,50 @@ const SignupPage = () => {
               </h4>
             </div>
             <div className="forms">
-              <InputBox type="text" callback={setUsername}>
-                Username
+              <InputBox
+                type="text"
+                callback={handleUsername}
+                error={validationState.username}
+              >
+                Username:
               </InputBox>
-              {isValidUsername ? (
-                <div></div>
-              ) : (
-                <>
-                  <p className="error-text">⛔ Username is not valid.</p>
-                  <br />
-                </>
-              )}
-              <div className="name">
-                <InputBox type="text" callback={setFirstName}>
-                  First name
-                </InputBox>
-                <InputBox type="text" callback={setLastName}>
-                  Last name
-                </InputBox>
-              </div>
-              {isValidName ? (
-                <div></div>
-              ) : (
-                <>
-                  <p className="error-text">⛔ Name is not valid.</p>
-                  <br />
-                </>
-              )}
-              <>
-                <InputBox type="email" callback={setEmail}>
-                  Email
-                </InputBox>
-                {isValidEmail ? (
-                  <div></div>
-                ) : (
-                  <>
-                    <p className="error-text">⛔ Email is not valid.</p>
-                    <br />
-                  </>
-                )}
-              </>
-              <>
-                <InputBox type="password" callback={setPassword}>
-                  Password
-                </InputBox>
-                {isValidPassword ? (
-                  <div></div>
-                ) : (
-                  <>
-                    <p className="error-text">⛔ Password is not valid.</p>
-                    <br />
-                  </>
-                )}
-              </>
+              <InputBox
+                type="text"
+                callback={handleName}
+                error={validationState.name}
+              >
+                Name:
+              </InputBox>
+              <InputBox
+                type="email"
+                callback={handleEmail}
+                error={validationState.email}
+              >
+                Email:
+              </InputBox>
+              <InputBox
+                type="password"
+                callback={handlePassword}
+                error={validationState.password}
+              >
+                Password:
+              </InputBox>
+              <InputBox
+                type="password"
+                callback={handlePasswordConfirm}
+                error={validationState.passwordConfirm}
+              >
+                Confirm Password:
+              </InputBox>
             </div>
             <div className="checkbox-wrapper">
               <input type="checkbox" name="get-emails" id="chk-1" />
               <p>Get the news, discounts and updates</p>
             </div>
-            <Button type="normal-button" submit={handleSubmit}>
+            <Button type="normal-button" submit={handleSignup}>
               Sign up
             </Button>
           </div>
-          {/* <div className="signup-google">
-            <div className="heading">
-              <h2>Sign up</h2>
-              <h4>
-                Have an account? <a href="#">Log In</a>
-              </h4>
-            </div>
-            <Button type="outlined-button">Continue with Google</Button>
-          </div> */}
         </div>
       </div>
     </>
