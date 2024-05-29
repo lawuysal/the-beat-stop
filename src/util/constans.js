@@ -1,8 +1,9 @@
 export const serverURLs = {
   BASE_URL: "http://127.0.0.1:3001",
   USERS: "http://127.0.0.1:3001/api/v1/users",
-  USERS_CHECK_EMAIL: "http://127.0.0.1:3001/api/v1/users/checkEmail",
-  USERS_CHECK_USERNAME: "http://127.0.0.1:3001/api/v1/users/checkUsername",
+  USERS_SIGNUP: "http://127.0.0.1:3001/api/v1/users/signup",
+  USERS_LOGIN: "http://127.0.0.1:3001/api/v1/users/login",
+  USERS_PROFILE: "http://127.0.0.1:3001/api/v1/users/profile/me",
   TRACKS: "http://127.0.0.1:3001/api/v1/tracks",
   BEATS: "http://127.0.0.1:3001/api/v1/beats",
   BEATS_ADDTRACK: "http://127.0.0.1:3001/api/v1/beats/addTrack",
