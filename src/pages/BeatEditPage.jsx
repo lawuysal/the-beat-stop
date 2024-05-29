@@ -14,7 +14,6 @@ function EditBeatPage() {
 
   return (
     <>
-      <NavBar></NavBar>
       <div className={`${classes.editPage}`}>
         {isBeatLoading ? (
           <LoadingIndicator></LoadingIndicator>

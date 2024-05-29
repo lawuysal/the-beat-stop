@@ -48,7 +48,7 @@ const UserBeatsPage = () => {
   }, []);
   return (
     <>
-      <NavBar></NavBar>(
+      (
       <div className="beats-page">
         <div className="header">
           <h1 className="beats-page-title">Your Beats:</h1>

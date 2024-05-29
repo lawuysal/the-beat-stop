@@ -83,12 +83,3 @@ h4 {
   grid-template-columns: 1fr 1fr;
   column-gap: 20px;
 }
-
-.hidden {
-  display: none;
-}
-
-.error-text {
-  color: red;
-  font-size: 0.8rem;
-}

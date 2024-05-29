@@ -6,7 +6,6 @@ import AudioPlayer from "../components/AudioPlayer";
 function MainPage() {
   return (
     <>
-      <NavBar></NavBar>
       <div className="slogan">
         <br />
 

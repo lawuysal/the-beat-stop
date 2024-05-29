@@ -142,7 +142,6 @@ function BeatDetailedPage() {
   );
   return (
     <>
-      <NavBar></NavBar>
       {!isBeatLoading ? (
         <div className={`${classes.detailedPage}`}>
           <h1>Beat Detailed Page</h1>

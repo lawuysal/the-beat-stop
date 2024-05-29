@@ -5,7 +5,6 @@ import PlanCard from "../components/PlanCard";
 const PricingPage = () => {
   return (
     <>
-      <NavBar></NavBar>
       <div className="slogan">
         <br />
         <h2>Join Us With The Best Plan</h2>

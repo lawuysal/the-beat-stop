@@ -218,7 +218,6 @@ export default function CreateBeatPage() {
 
   return (
     <>
-      <NavBar></NavBar>
       <div className="create-new-beat-page">
         <h1>Create a New Beat</h1>
         <InputBox

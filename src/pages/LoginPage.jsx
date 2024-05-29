@@ -6,7 +6,6 @@ import InputBox from "../components/InputBox";
 const LoginPage = () => {
   return (
     <>
-      <NavBar></NavBar>
       <br />
       <br />
       <div className="login-wrapper">
