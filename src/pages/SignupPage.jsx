@@ -1,10 +1,10 @@
-import NavBar from "../components/NavBar";
 import "./../pages/SignupPage.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import { useState, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import validator from "validator";
+import { toast } from "react-hot-toast";
 import { serverURLs } from "../util/constans";
 
 const SignupPage = () => {
@@ -34,8 +34,7 @@ const SignupPage = () => {
     mailList: { isValid: true, message: "" },
   };
 
-  const [emailExists, setEmailExists] = useState(false);
-  const [usernameExists, setUsernameExists] = useState(false);
+  const { membership } = useParams();
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
   const [validationState, validationDispatch] = useReducer(
     validationReducer,
@@ -72,13 +71,6 @@ const SignupPage = () => {
             isValid: validator.isLength(action.value, { min: 3, max: 20 }),
           },
         };
-      case "username-dublicate":
-        return {
-          ...state,
-          username: {
-            isValid: action.value,
-          },
-        };
       case "name":
         return {
           ...state,
@@ -91,13 +83,6 @@ const SignupPage = () => {
           ...state,
           email: {
             isValid: validator.isEmail(action.value),
-          },
-        };
-      case "email-dublicate":
-        return {
-          ...state,
-          email: {
-            isValid: action.value,
           },
         };
       case "password":
@@ -148,55 +133,54 @@ const SignupPage = () => {
     validationDispatch({ type: "passwordConfirm", value: value });
     dataDispatch({ type: "passwordConfirm", value: value });
   }
-  function handleMembership(value) {
-    validationDispatch({ type: "membership", value: value });
-    dataDispatch({ type: "membership", value: value });
-  }
   function handleMailList(value) {
     validationDispatch({ type: "mailList", value: value });
     dataDispatch({ type: "mailList", value: value });
   }
 
-  async function handleDublicateEmail() {
-    const res = await fetch(
-      `${serverURLs.USERS_CHECK_EMAIL}/${dataState.email}`
-    );
-    const data = await res.json();
-    console.log(data.exists, "email");
-    setEmailExists(data.exists);
-  }
-
-  async function handleDublicateUsername() {
-    const res = await fetch(
-      `${serverURLs.USERS_CHECK_USERNAME}/${dataState.username}`
-    );
-    const data = await res.json();
-    console.log(data.exists, "username");
-    setUsernameExists(data.exists);
-  }
-
   async function handleSignup() {
-    await handleDublicateEmail();
-    await handleDublicateUsername();
+    const payload = {
+      username: dataState.username,
+      name: dataState.name,
+      email: dataState.email,
+      password: dataState.password,
+      membership: dataState.membership,
+      mailList: dataState.mailList,
+    };
 
-    validationDispatch({ type: "username", value: dataState.username });
-    validationDispatch({ type: "name", value: dataState.name });
-    validationDispatch({ type: "email", value: dataState.email });
-    validationDispatch({ type: "password", value: dataState.password });
-    validationDispatch({
-      type: "passwordConfirm",
-      value: dataState.passwordConfirm,
-    });
+    if (
+      validationState.username.isValid &&
+      validationState.name.isValid &&
+      validationState.email.isValid &&
+      validationState.password.isValid &&
+      validationState.passwordConfirm.isValid &&
+      validationState.mailList.isValid &&
+      validationState.membership.isValid
+    ) {
+      const res = await fetch(`${serverURLs.USERS_SIGNUP}`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
 
-    console.log(usernameExists, emailExists);
-
-    if (usernameExists) {
-      validationDispatch({ type: "username-dublicate", value: false });
-    }
-    if (emailExists) {
-      validationDispatch({ type: "email-dublicate", value: false });
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        toast.success("Account created successfully");
+        localStorage.setItem("token", JSON.stringify(data.token));
+      }
     }
   }
+
+  useEffect(
+    function () {
+      dataDispatch({ type: "membership", value: membership });
+    },
+    [membership]
+  );
 
   return (
     <>
@@ -249,7 +233,13 @@ const SignupPage = () => {
               </InputBox>
             </div>
             <div className="checkbox-wrapper">
-              <input type="checkbox" name="get-emails" id="chk-1" />
+              <input
+                type="checkbox"
+                name="get-emails"
+                id="chk-1"
+                checked={dataState.mailList}
+                onChange={(e) => handleMailList(e.target.checked)}
+              />
               <p>Get the news, discounts and updates</p>
             </div>
             <Button type="normal-button" submit={handleSignup}>

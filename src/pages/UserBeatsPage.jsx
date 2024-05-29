@@ -4,7 +4,6 @@ import { serverURLs } from "../util/constans";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import NavBar from "../components/NavBar";
 import BeatPreviewCard from "../components/BeatPreviewCard";
 import AudioPlayer from "../components/AudioPlayer";
 import LoadingIndicator from "../components/LoadingIndicator";

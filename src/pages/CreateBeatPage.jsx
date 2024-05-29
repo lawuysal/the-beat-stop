@@ -1,5 +1,4 @@
 import("./CreateBeatPage.css");
-import NavBar from "../components/NavBar";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import validator from "validator";

@@ -1,5 +1,4 @@
 import classes from "./BeatEditPage.module.css";
-import NavBar from "../components/NavBar";
 import LoadingIndicator from "../components/LoadingIndicator";
 import InputBox from "../components/InputBox";
 import useBeat from "../hooks/useBeat";

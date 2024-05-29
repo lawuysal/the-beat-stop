@@ -1,4 +1,3 @@
-import NavBar from "../components/NavBar";
 import "./../pages/PricingPage.css";
 import PlanCard from "../components/PlanCard";
 

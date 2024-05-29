@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { serverURLs } from "./../util/constans";
 import { convertPath } from "../util/convertPath";
 
-import NavBar from "./../components/NavBar";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
 import TrackCard from "../components/TrackCard";

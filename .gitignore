@@ -26,3 +26,4 @@ src/util/constants.js
 *.njsproj
 *.sln
 *.sw?
+src/util/constans.js

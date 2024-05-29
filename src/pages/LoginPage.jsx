@@ -1,9 +1,47 @@
-import NavBar from "../components/NavBar";
 import "./../pages/LoginPage.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 
+import { useState } from "react";
+import { serverURLs } from "../util/constans";
+
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState({ email: "", password: "" });
+
+  function handleEmailChange(value) {
+    setData({ ...data, email: value });
+  }
+  function handlePasswordChange(value) {
+    setData({ ...data, password: value });
+  }
+  function handleSubmit() {
+    fetch(`${serverURLs.USERS_LOGIN}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "success") {
+          toast.success("Logged in successfully");
+          localStorage.setItem("token", JSON.stringify(data.token));
+          navigate("/");
+          window.location.reload();
+        } else {
+          toast.error(data.message);
+        }
+
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }
+
   return (
     <>
       <br />
@@ -21,12 +59,18 @@ const LoginPage = () => {
             <h4>or</h4>
             <div className="line-break"></div>
           </div>
-          <InputBox type="email">Email</InputBox>
-          <InputBox type="password">Password</InputBox>
+          <InputBox type="email" callback={handleEmailChange}>
+            Email
+          </InputBox>
+          <InputBox type="password" callback={handlePasswordChange}>
+            Password
+          </InputBox>
           <div className="reset-pass-wrapper">
             <a href="#">Reset password</a>
           </div>
-          <Button type="normal-button">Log in</Button>
+          <Button type="normal-button" submit={handleSubmit}>
+            Log in
+          </Button>
         </div>
       </div>
     </>
