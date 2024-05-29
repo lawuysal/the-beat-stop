@@ -4,6 +4,9 @@ import { serverURLs } from "../util/constans";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
+
 import BeatPreviewCard from "../components/BeatPreviewCard";
 import AudioPlayer from "../components/AudioPlayer";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -14,8 +17,11 @@ const UserBeatsPage = () => {
 
   const navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
+
   const [currentBeat, setCurrentBeat] = useState("");
   const [beats, setBeats] = useState([]);
+  const [isThereBeats, setIsThereBeats] = useState(false);
   const [isBeatsLoading, setIsBeatsLoading] = useState(true);
   const [playerTrack, setPlayerTrack] = useState(null);
 
@@ -31,20 +37,26 @@ const UserBeatsPage = () => {
     navigate(`/beats/${beatId}`);
   }
 
-  useEffect(function () {
-    setIsBeatsLoading(true);
-    async function fetchSong() {
-      const res = await fetch(
-        `${serverURLs.BEATS}/user/6604178ac93ccb58387d3ba4`
-      );
-      const data = await res.json();
-      const beats = data.data.beats;
+  useEffect(
+    function () {
+      setIsBeatsLoading(true);
+      async function fetchSong() {
+        const res = await fetch(`${serverURLs.BEATS}/user/${user._id}`);
+        const data = await res.json();
+        const beats = data.data.beats;
+        if (beats.length > 0) {
+          setIsThereBeats(true);
+        } else {
+          setIsThereBeats(false);
+        }
 
-      setBeats(beats);
-      setIsBeatsLoading(false);
-    }
-    fetchSong();
-  }, []);
+        setBeats(beats);
+        setIsBeatsLoading(false);
+      }
+      fetchSong();
+    },
+    [user._id]
+  );
   return (
     <>
       (
@@ -56,17 +68,21 @@ const UserBeatsPage = () => {
           </Button>
         </div>
         {!isBeatsLoading ? (
-          beats.map((beat, index) => (
-            <BeatPreviewCard
-              key={index}
-              beat={beat}
-              currentBeat={currentBeat}
-              setCurrentBeat={setCurrentBeat}
-              setPlayerTrack={setPlayerTrack}
-              onPlayPause={handlePlayPause}
-              navigate={() => handleNavigateDetails(beat._id)}
-            />
-          ))
+          isThereBeats ? (
+            beats.map((beat, index) => (
+              <BeatPreviewCard
+                key={index}
+                beat={beat}
+                currentBeat={currentBeat}
+                setCurrentBeat={setCurrentBeat}
+                setPlayerTrack={setPlayerTrack}
+                onPlayPause={handlePlayPause}
+                navigate={() => handleNavigateDetails(beat._id)}
+              />
+            ))
+          ) : (
+            <h1 className="no-beats-message">You have no beats yet</h1>
+          )
         ) : (
           <LoadingIndicator></LoadingIndicator>
         )}
