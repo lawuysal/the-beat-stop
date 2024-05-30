@@ -1,6 +1,7 @@
 export const serverURLs = {
   BASE_URL: "http://127.0.0.1:3001",
   USERS: "http://127.0.0.1:3001/api/v1/users",
+  USERS_EDIT_MAIN: "http://127.0.0.1:3001/api/v1/users/editUser/main",
   USERS_SIGNUP: "http://127.0.0.1:3001/api/v1/users/signup",
   USERS_LOGIN: "http://127.0.0.1:3001/api/v1/users/login",
   USERS_PROFILE: "http://127.0.0.1:3001/api/v1/users/profile/me",
@@ -12,5 +13,6 @@ export const serverURLs = {
   BILLINGS: "http://127.0.0.1:3001/api/v1/billings",
   PURCHASES: "http://127.0.0.1:3001/api/v1/purchases",
   BEAT_IMAGES: "http://127.0.0.1:3001/images/beat-images",
+  USER_IMAGES: "http://127.0.0.1:3001",
   TRACK_FILES: "http://127.0.0.1:3001/tracks/",
 };

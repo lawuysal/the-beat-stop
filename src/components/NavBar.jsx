@@ -2,18 +2,39 @@ import "./../components/NavBar.css";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import NavItem from "../components/NavItem";
+import { convertPath } from "./../util/convertPath";
+import { serverURLs } from "./../util/constans";
 import { BsBoxArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
 function NavBar() {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, isUserLoading } = useContext(UserContext);
+  const [avatar, setAvatar] = useState(null);
 
   function handleSignedOut() {
-    localStorage.removeItem("token");
-    window.location.reload();
+    if (window.confirm("Are you sure you want to sign out?")) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+  }
+
+  function handleNavigateUserPage() {
+    navigate(`/user/detailed/${user._id}`);
+  }
+
+  useEffect(() => {
+    if (user && user.photo) {
+      setAvatar(
+        `${serverURLs.USER_IMAGES}/${convertPath(user.photo, "userPhoto")}`
+      );
+    }
+  }, [user]);
+
+  if (isUserLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -28,6 +49,14 @@ function NavBar() {
       {user ? (
         <div className="signed-user">
           <p>Welcome, {user.name}</p>
+          {avatar && (
+            <img
+              src={avatar}
+              alt={`${user.name} avatar`}
+              className="rounded-avatar"
+              onClick={handleNavigateUserPage}
+            />
+          )}
           <BsBoxArrowRight
             className="signout-icon"
             onClick={handleSignedOut}

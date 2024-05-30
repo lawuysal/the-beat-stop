@@ -6,10 +6,18 @@ export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isUserLoading, setIsUserLoading] = useState(false);
 
   useEffect(
     function () {
-      if (localStorage.getItem("token") === null) return;
+      setIsUserLoading(true);
+      if (localStorage.getItem("token") === null) {
+        setIsUserLoading(false);
+      }
+      if (user) {
+        setIsUserLoading(false);
+        return;
+      }
       if (!user && localStorage.getItem("token")) {
         fetch(`${serverURLs.USERS_PROFILE}`, {
           headers: {
@@ -21,6 +29,7 @@ export function UserContextProvider({ children }) {
           .then((res) => res.json())
           .then((data) => {
             setUser(data.data.user);
+            setIsUserLoading(false);
           })
           .catch((error) => console.log(error));
       }
@@ -29,7 +38,7 @@ export function UserContextProvider({ children }) {
   );
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isUserLoading }}>
       {children}
     </UserContext.Provider>
   );
