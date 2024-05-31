@@ -2,18 +2,14 @@ import("./BeatPreviewCard.css");
 import { serverURLs } from "./../util/constans";
 import { convertPath } from "../util/convertPath";
 
+import { AudioContext } from "../context/audioContext";
+
 import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "./Button";
 
-const BeatPreviewCard = ({
-  beat,
-  currentBeat,
-  setCurrentBeat,
-  setPlayerTrack,
-  onPlayPause,
-  navigate,
-}) => {
+const BeatPreviewCard = ({ currentBeat, setCurrentBeat, beat, navigate }) => {
+  const { play, pause, setTrack } = useContext(AudioContext);
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Handle cover photo
@@ -51,12 +47,15 @@ const BeatPreviewCard = ({
         src: path,
       };
 
-      setPlayerTrack(newTrack);
-      onPlayPause(isPlaying);
+      setTrack(newTrack);
     } else if (currentBeat === beat._id) {
       setIsPlaying(false);
       setCurrentBeat("");
-      onPlayPause(isPlaying);
+    }
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
     }
   }
 

@@ -1,30 +1,34 @@
 import ReactAudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "./../components/AudioPlayer.css";
-import React from "react";
+import { useContext } from "react";
 import { serverURLs } from "../util/constans";
+import { AudioContext } from "../context/audioContext";
 
-const AudioPlayer = React.forwardRef(function a({ track }, ref) {
-  const playerStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "fixed",
-    bottom: "0",
-    width: "100%",
-    height: "150px",
-  };
+const playerStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "fixed",
+  bottom: "0",
+  width: "100%",
+  height: "150px",
+};
+
+const AudioPlayer = () => {
+  const { audioRef, currentTrack: track } = useContext(AudioContext);
 
   return (
     <div className="player" style={playerStyle}>
       <ReactAudioPlayer
+        volume={0.2}
         src={
           track && track.src
             ? track.src
             : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
         }
         onPlay={() => console.log("onPlay")}
-        ref={ref}
+        ref={audioRef}
         header={
           <div className="song-info">
             <img
@@ -49,6 +53,6 @@ const AudioPlayer = React.forwardRef(function a({ track }, ref) {
       />
     </div>
   );
-});
+};
 
 export default AudioPlayer;

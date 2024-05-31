@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 import { UserContextProvider } from "./context/userContext";
+import { AudioProvider } from "./context/audioContext";
 
 import { Toaster } from "react-hot-toast";
 
@@ -25,93 +26,95 @@ function App() {
   return (
     <>
       <UserContextProvider>
-        <NavBar />
-        <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/login"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <LoginPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/signup/:membership"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <SignupPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/pricing"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <PricingPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/beats"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <UserBeatsPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/create-beat"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <CreateBeatPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/beats/:beatId"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <BeatDetailedPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/beats/edit/:beatId"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
+        <AudioProvider>
+          <NavBar />
+          <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/login"
+              element={
                 <Suspense fallback={<LoadingIndicator />}>
-                  <BeatEditPage />
+                  <LoginPage />
                 </Suspense>
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/detailed/:userId"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <UserDetailedPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/user/edit/:userId"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <UserEditPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/search/:query"
-            element={
-              <Suspense fallback={<LoadingIndicator />}>
-                <SearchPage />
-              </Suspense>
-            }
-          />
-        </Routes>
+              }
+            />
+            <Route
+              path="/signup/:membership"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <SignupPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/pricing"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <PricingPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/user/beats"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <UserBeatsPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/create-beat"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <CreateBeatPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/beats/:beatId"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <BeatDetailedPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/beats/edit/:beatId"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <BeatEditPage />
+                  </Suspense>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/user/detailed/:userId"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <UserDetailedPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/user/edit/:userId"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <UserEditPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/search/:query"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <SearchPage />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </AudioProvider>
       </UserContextProvider>
     </>
   );

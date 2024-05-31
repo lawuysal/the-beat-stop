@@ -1,10 +1,9 @@
 import("./UserBeatsPage.css");
 import { serverURLs } from "../util/constans";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useContext } from "react";
 import { UserContext } from "../context/userContext";
 
 import BeatPreviewCard from "../components/BeatPreviewCard";
@@ -13,8 +12,6 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
 
 const UserBeatsPage = () => {
-  const playerRef = useRef(null);
-
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
@@ -23,15 +20,6 @@ const UserBeatsPage = () => {
   const [beats, setBeats] = useState([]);
   const [isThereBeats, setIsThereBeats] = useState(false);
   const [isBeatsLoading, setIsBeatsLoading] = useState(true);
-  const [playerTrack, setPlayerTrack] = useState(null);
-
-  function handlePlayPause(isPlaying) {
-    if (isPlaying) {
-      playerRef.current.audio.current.pause();
-    } else {
-      playerRef.current.audio.current.play();
-    }
-  }
 
   function handleNavigateDetails(beatId) {
     navigate(`/beats/${beatId}`);
@@ -75,8 +63,6 @@ const UserBeatsPage = () => {
                 beat={beat}
                 currentBeat={currentBeat}
                 setCurrentBeat={setCurrentBeat}
-                setPlayerTrack={setPlayerTrack}
-                onPlayPause={handlePlayPause}
                 navigate={() => handleNavigateDetails(beat._id)}
               />
             ))
@@ -87,7 +73,7 @@ const UserBeatsPage = () => {
           <LoadingIndicator></LoadingIndicator>
         )}
       </div>
-      )<AudioPlayer track={playerTrack} ref={playerRef}></AudioPlayer>
+      )<AudioPlayer></AudioPlayer>
     </>
   );
 };
