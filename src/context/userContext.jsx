@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
 import { serverURLs } from "../util/constans";
+import toast from "react-hot-toast";
 
 export const UserContext = createContext({});
 
@@ -31,7 +32,11 @@ export function UserContextProvider({ children }) {
             setUser(data.data.user);
             setIsUserLoading(false);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            setIsUserLoading(false);
+            toast.error("Error fetching user data");
+            toast.error(error.message);
+          });
       }
     },
     [user]

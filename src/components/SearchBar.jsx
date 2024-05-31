@@ -1,8 +1,14 @@
 import "./../components/SearchBar.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ onSearchQueryChange }) => {
   const searchBarRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  function handleSearchQueryChange(e) {
+    setSearchQuery(e.target.value);
+    onSearchQueryChange?.(e.target.value);
+  }
 
   useEffect(function () {
     searchBarRef.current.focus();
@@ -25,6 +31,8 @@ const SearchBar = () => {
           <div className="searchbar-input-spacer"></div>
 
           <input
+            value={searchQuery}
+            onChange={handleSearchQueryChange}
             type="text"
             className="searchbar-input"
             maxLength="2048"
