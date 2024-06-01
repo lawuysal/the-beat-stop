@@ -5,8 +5,10 @@ import { convertPath } from "../util/convertPath";
 import { AudioContext } from "../context/audioContext";
 
 import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Button from "./Button";
+import LoadingIndicator from "./LoadingIndicator";
+import Hashtag from "./Hashtag";
 
 const BeatPreviewCard = ({
   currentBeat,
@@ -17,13 +19,23 @@ const BeatPreviewCard = ({
 }) => {
   const { play, pause, setTrack } = useContext(AudioContext);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [beatOwnerName, setBeatOwnerName] = useState("");
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
-  // Handle cover photo
+  //! Handle cover photo (must be an effect)
   const photoPath = beat.photo;
   const cover = `${serverURLs.BEAT_IMAGES}/${convertPath(
     photoPath,
     "beatPhoto"
   )}`;
+
+  function handleBeatName() {
+    if (beat.name.length > 20) {
+      return beat.name.slice(0, 20) + "...";
+    } else {
+      return beat.name;
+    }
+  }
 
   async function handlePlay() {
     if (currentBeat !== beat._id) {
@@ -39,7 +51,7 @@ const BeatPreviewCard = ({
         "track"
       )}`;
 
-      // Get user info
+      // This can get deleted
       const userRes = await fetch(`${serverURLs.USERS}/${beat.owner}`);
       const userData = await userRes.json();
       const user = userData.data.data.user;
@@ -65,6 +77,23 @@ const BeatPreviewCard = ({
     }
   }
 
+  useEffect(() => {
+    async function getOwner() {
+      // Get user info
+      const userRes = await fetch(`${serverURLs.USERS}/${beat.owner}`);
+      const userData = await userRes.json();
+      const user = userData.data.data.user;
+      const userName = user.name;
+      setBeatOwnerName(userName);
+      setIsUserLoading(false);
+    }
+    getOwner();
+  }, [beat]);
+
+  if (isUserLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <div className="card-container">
       {!isPlaying || currentBeat !== beat._id ? (
@@ -76,14 +105,28 @@ const BeatPreviewCard = ({
         <img src={cover} alt="kljlk" id="cover-image" />
       </div>
       <div className="beat-info">
-        <h3>{beat.name}</h3>
-        <p>{`"${beat.summary}"`}</p>
+        <div className="beat-title">
+          <h3>{`${handleBeatName()}`}</h3>
+          <div className="hashtags">
+            {beat.type.slice(0, 2).map((type, index) => (
+              <Hashtag key={index}>{type}</Hashtag>
+            ))}
+          </div>
+        </div>
+        <div className="alt-info">
+          <p>{beatOwnerName} </p>
+          <p>|</p>
+          <p>{beat.bpm} BPM </p>
+          <p>|</p>
+          <p>{beat.key}</p>
+          <p>|</p>
+          {beat.paid ? <p>Sold</p> : <p>Avaliable</p>}
+        </div>
       </div>
-      {page === "user-beats" ? (
-        <Button type="outlined-button" submit={navigate}>
-          Details
-        </Button>
-      ) : null}
+
+      <Button type="outlined-button" submit={navigate}>
+        Details
+      </Button>
     </div>
   );
 };

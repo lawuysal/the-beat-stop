@@ -1,0 +1,14 @@
+.hashtag {
+  display: inline-flex;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  align-items: center;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #1f2937;
+  background-color: #f3f4f6;
+}
