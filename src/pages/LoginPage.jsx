@@ -8,9 +8,14 @@ import { serverURLs } from "../util/constans";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
+import { useKeyboardKey } from "../hooks/useKeyboardKey";
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({ email: "", password: "" });
+  useKeyboardKey("Enter", () => {
+    handleSubmit();
+  });
 
   function handleEmailChange(value) {
     setData({ ...data, email: value });
@@ -49,16 +54,11 @@ const LoginPage = () => {
       <div className="login-wrapper">
         <div className="login">
           <h2>Log in</h2>
-          <h4>
-            Don&apos;t have an account? <a href="#">Sign Up</a>
-          </h4>
-          <Button type="outlined-button">Continue with Google</Button>
-          <Button type="outlined-button">Continue with Facebook</Button>
-          <div className="divider">
-            <div className="line-break"></div>
-            <h4>or</h4>
-            <div className="line-break"></div>
+          <div className="dont-have">
+            <h4>Don&apos;t have an account?</h4>
+            <Button type="text-button">Sign up</Button>
           </div>
+
           <InputBox type="email" callback={handleEmailChange}>
             Email
           </InputBox>
