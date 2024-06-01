@@ -8,7 +8,7 @@ import BeatPreviewCard from "./BeatPreviewCard";
 import AudioPlayer from "./AudioPlayer";
 import LoadingIndicator from "./LoadingIndicator";
 
-const Beats = () => {
+const QueryBeats = ({ setResultsCount }) => {
   const navigate = useNavigate();
   const { query } = useParams();
 
@@ -17,6 +17,10 @@ const Beats = () => {
   const [isThereBeats, setIsThereBeats] = useState(false);
   const [isBeatsLoading, setIsBeatsLoading] = useState(true);
 
+  function handleNavigateDetails(beatId) {
+    navigate(`/beats/${beatId}`);
+  }
+
   useEffect(
     function () {
       setIsBeatsLoading(true);
@@ -24,6 +28,7 @@ const Beats = () => {
         const res = await fetch(`${serverURLs.BEATS_QUERY}/${query}`);
         const data = await res.json();
         const beats = data.beats;
+        setResultsCount(beats.length);
         if (beats.length > 0) {
           setIsThereBeats(true);
         } else {
@@ -35,7 +40,7 @@ const Beats = () => {
 
       fetchSong();
     },
-    [query]
+    [query, setResultsCount]
   );
 
   return (
@@ -50,6 +55,7 @@ const Beats = () => {
                 currentBeat={currentBeat}
                 setCurrentBeat={setCurrentBeat}
                 page="query-beats"
+                navigate={() => handleNavigateDetails(beat._id)}
               />
             ))
           ) : (
@@ -64,4 +70,4 @@ const Beats = () => {
   );
 };
 
-export default Beats;
+export default QueryBeats;

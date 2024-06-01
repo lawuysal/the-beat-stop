@@ -10,6 +10,7 @@ function QueryPage() {
   const { query } = useParams();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(query);
+  const [resultsCount, setResultsCount] = useState(0);
   useKeyboardKey("Enter", () => {
     if (searchQuery.length === 0) {
       toast.error("Please enter a search query");
@@ -23,7 +24,10 @@ function QueryPage() {
     <div className={`${STYLES.queryPage}`}>
       <SearchBar onSearchQueryChange={setSearchQuery} defaultQuery={query} />
       <div className={`${STYLES.resultsWrapper}`}>
-        <QueryBeats />
+        <div className={`${STYLES.resultsLength}`}>
+          <h2>Found {resultsCount} beats:</h2>
+        </div>
+        <QueryBeats setResultsCount={setResultsCount} />
       </div>
     </div>
   );
