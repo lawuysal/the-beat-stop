@@ -3,12 +3,22 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 2rem;
 }
 
 .resultsWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
   margin-top: 4rem;
-  width: 55%;
+  width: 60%;
+}
+
+.resultsLength {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  color: var(--primary-color);
 }

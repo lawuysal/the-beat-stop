@@ -1,8 +1,9 @@
 import classes from "./BeatDetailedPage.module.css";
 
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 import { serverURLs } from "./../util/constans";
 import { convertPath } from "../util/convertPath";
@@ -30,8 +31,10 @@ function BeatDetailedPage() {
     _id: "",
   };
 
+  const { user } = useContext(UserContext);
   const { beatId } = useParams();
   const navigate = useNavigate();
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [isBeatLoading, setIsBeatLoading] = useState(true);
   const [isAddTrackMode, setIsAddTrackMode] = useState(false);
   const [trackFile, setTrackFile] = useState(undefined);
@@ -53,6 +56,10 @@ function BeatDetailedPage() {
 
   function handleBeatEdit() {
     navigate(`/beats/edit/${beatId}`);
+  }
+
+  function handleNavigateBuyPage() {
+    navigate(`/beats/buy/${beatId}`);
   }
 
   async function handleBeatDelete() {
@@ -139,6 +146,12 @@ function BeatDetailedPage() {
     },
     [beatId]
   );
+
+  useEffect(() => {
+    if (user) {
+      setIsUserLoading(false);
+    }
+  }, [user]);
   return (
     <>
       {!isBeatLoading ? (
@@ -167,13 +180,19 @@ function BeatDetailedPage() {
           ) : (
             <p>No tracks available</p>
           )}
-          <Button
-            type="outlined-button"
-            submit={() => setIsAddTrackMode(!isAddTrackMode)}
-          >
-            Add Track
-          </Button>
-          {isAddTrackMode ? (
+          {user && user._id === beatState.owner ? (
+            <Button
+              type="outlined-button"
+              submit={() => setIsAddTrackMode(!isAddTrackMode)}
+            >
+              Add Track
+            </Button>
+          ) : (
+            <></>
+          )}
+          {!isAddTrackMode ? (
+            <></>
+          ) : (
             <>
               <InputBox
                 type="file"
@@ -185,16 +204,22 @@ function BeatDetailedPage() {
                 Upload
               </Button>
             </>
-          ) : (
-            true
           )}
 
-          <Button type="normal-button" submit={handleBeatDelete}>
-            Delete Beat
-          </Button>
-          <Button type="normal-button" submit={handleBeatEdit}>
-            Edit Beat
-          </Button>
+          {user && user._id === beatState.owner ? (
+            <>
+              <Button type="outlined-button" submit={handleBeatEdit}>
+                Edit
+              </Button>
+              <Button type="outlined-button" submit={handleBeatDelete}>
+                Delete
+              </Button>
+            </>
+          ) : (
+            <Button type="normal-button" submit={handleNavigateBuyPage}>
+              Buy
+            </Button>
+          )}
         </div>
       ) : (
         <LoadingIndicator></LoadingIndicator>

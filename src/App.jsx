@@ -18,6 +18,7 @@ const UserBeatsPage = lazy(() => import("./pages/UserBeatsPage"));
 const CreateBeatPage = lazy(() => import("./pages/CreateBeatPage"));
 const BeatDetailedPage = lazy(() => import("./pages/BeatDetailedPage"));
 const BeatEditPage = lazy(() => import("./pages/BeatEditPage"));
+const BeatBuyPage = lazy(() => import("./pages/BeatBuyPage"));
 const UserDetailedPage = lazy(() => import("./pages/UserDetailedPage"));
 const UserEditPage = lazy(() => import("./pages/UserEditPage"));
 const QueryPage = lazy(() => import("./pages/QueryPage"));
@@ -110,6 +111,14 @@ function App() {
               element={
                 <Suspense fallback={<LoadingIndicator />}>
                   <QueryPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/beats/buy/:beatId"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <BeatBuyPage />
                 </Suspense>
               }
             />
