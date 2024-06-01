@@ -20,7 +20,7 @@ const BeatDetailedPage = lazy(() => import("./pages/BeatDetailedPage"));
 const BeatEditPage = lazy(() => import("./pages/BeatEditPage"));
 const UserDetailedPage = lazy(() => import("./pages/UserDetailedPage"));
 const UserEditPage = lazy(() => import("./pages/UserEditPage"));
-const SearchPage = lazy(() => import("./pages/SearchPage"));
+const QueryPage = lazy(() => import("./pages/QueryPage"));
 
 function App() {
   return (
@@ -106,10 +106,10 @@ function App() {
               }
             />
             <Route
-              path="/search/:query"
+              path="/query/:query"
               element={
                 <Suspense fallback={<LoadingIndicator />}>
-                  <SearchPage />
+                  <QueryPage />
                 </Suspense>
               }
             />

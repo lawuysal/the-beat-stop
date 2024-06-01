@@ -1,9 +1,9 @@
 import "./../components/SearchBar.css";
 import { useEffect, useRef, useState } from "react";
 
-const SearchBar = ({ onSearchQueryChange }) => {
+const SearchBar = ({ onSearchQueryChange, defaultQuery }) => {
   const searchBarRef = useRef(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(defaultQuery || "");
 
   function handleSearchQueryChange(e) {
     setSearchQuery(e.target.value);

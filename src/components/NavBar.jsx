@@ -8,6 +8,7 @@ import { BsBoxArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { useContext, useState, useEffect } from "react";
+import LoadingIndicator from "./LoadingIndicator";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function NavBar() {
   }, [user]);
 
   if (isUserLoading) {
-    return <div>Loading...</div>;
+    return <LoadingIndicator></LoadingIndicator>;
   }
 
   return (

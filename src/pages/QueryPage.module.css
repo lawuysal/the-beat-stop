@@ -1,0 +1,14 @@
+.queryPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.resultsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+  width: 55%;
+}

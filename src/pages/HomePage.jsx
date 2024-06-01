@@ -15,7 +15,7 @@ function MainPage() {
     } else if (searchQuery.length < 3) {
       toast.error("Please enter a search query with at least 3 characters");
     } else {
-      navigate(`/search/${searchQuery}`);
+      navigate(`/query/${searchQuery}`);
     }
   });
 

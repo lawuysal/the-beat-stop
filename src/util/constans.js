@@ -7,6 +7,7 @@ export const serverURLs = {
   USERS_PROFILE: "http://127.0.0.1:3001/api/v1/users/profile/me",
   TRACKS: "http://127.0.0.1:3001/api/v1/tracks",
   BEATS: "http://127.0.0.1:3001/api/v1/beats",
+  BEATS_QUERY: "http://127.0.0.1:3001/api/v1/beats/query",
   BEATS_ADDTRACK: "http://127.0.0.1:3001/api/v1/beats/addTrack",
   BEATS_DELETETRACK: "http://127.0.0.1:3001/api/v1/beats/deleteTrack",
   BEATS_EDIT_MAIN: "http://127.0.0.1:3001/api/v1/beats/editBeat/main",

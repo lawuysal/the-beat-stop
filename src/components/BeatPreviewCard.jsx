@@ -8,7 +8,13 @@ import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { useState, useContext } from "react";
 import Button from "./Button";
 
-const BeatPreviewCard = ({ currentBeat, setCurrentBeat, beat, navigate }) => {
+const BeatPreviewCard = ({
+  currentBeat,
+  setCurrentBeat,
+  beat,
+  navigate,
+  page,
+}) => {
   const { play, pause, setTrack } = useContext(AudioContext);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -72,10 +78,12 @@ const BeatPreviewCard = ({ currentBeat, setCurrentBeat, beat, navigate }) => {
       <div className="beat-info">
         <h3>{beat.name}</h3>
         <p>{`"${beat.summary}"`}</p>
+      </div>
+      {page === "user-beats" ? (
         <Button type="outlined-button" submit={navigate}>
           Details
         </Button>
-      </div>
+      ) : null}
     </div>
   );
 };
