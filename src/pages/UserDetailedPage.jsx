@@ -12,7 +12,7 @@ export default function UserDetailedPage() {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   function handleNavigateUserEditPage() {
-    navigate(`/user/edit/${user._id}`);
+    navigate(`/user/edit`);
   }
 
   useEffect(() => {
@@ -27,16 +27,18 @@ export default function UserDetailedPage() {
 
   return (
     <div className={`${classes.userPage}`}>
-      <h1>User Detailed Page</h1>
-      <p>{user.name}</p>
-      <p>{user.email}</p>
-      <p>{user._id}</p>
-      <p>{user.username}</p>
-      <p>{user.description}</p>
-      <p>{user.membership}</p>
-      <Button type="normal-button" submit={handleNavigateUserEditPage}>
-        Edit Profile
-      </Button>
+      <div>
+        <h1>User Detailed Page</h1>
+        <p>{user.name}</p>
+        <p>{user.email}</p>
+        <p>{user._id}</p>
+        <p>{user.username}</p>
+        <p>{user.description}</p>
+        <p>{user.membership}</p>
+        <Button type="normal-button" submit={handleNavigateUserEditPage}>
+          Edit Profile
+        </Button>
+      </div>
     </div>
   );
 }

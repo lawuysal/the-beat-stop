@@ -1,0 +1,69 @@
+.sideBar {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  align-items: center;
+  justify-items: center;
+  margin-top: 5vh;
+  width: 30vh;
+  height: 80vh;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: var(--background-color);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 40vh;
+  width: 90%;
+}
+
+.button {
+  display: flex;
+  height: 4vh;
+  align-items: center;
+  background-color: var(--light-color);
+  width: 80%;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  padding-left: 15px;
+}
+
+.selected {
+  transform: translateX(5px);
+}
+
+.selected::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: all 0.1s ease;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.button:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.button:hover::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: all 0.1s ease;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}

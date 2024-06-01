@@ -23,7 +23,7 @@ function NavBar() {
   }
 
   function handleNavigateUserPage() {
-    navigate(`/user/detailed/${user._id}`);
+    navigate(`/profile/user`);
   }
 
   function handleBeatsButton() {

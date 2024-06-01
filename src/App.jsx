@@ -22,6 +22,7 @@ const BeatBuyPage = lazy(() => import("./pages/BeatBuyPage"));
 const UserDetailedPage = lazy(() => import("./pages/UserDetailedPage"));
 const UserEditPage = lazy(() => import("./pages/UserEditPage"));
 const QueryPage = lazy(() => import("./pages/QueryPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
 function App() {
   return (
@@ -91,21 +92,31 @@ function App() {
               }
             />
             <Route
-              path="/user/detailed/:userId"
+              path="/profile"
               element={
                 <Suspense fallback={<LoadingIndicator />}>
-                  <UserDetailedPage />
+                  <ProfilePage />
                 </Suspense>
               }
-            />
-            <Route
-              path="/user/edit/:userId"
-              element={
-                <Suspense fallback={<LoadingIndicator />}>
-                  <UserEditPage />
-                </Suspense>
-              }
-            />
+            >
+              <Route
+                path="user/"
+                element={
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <UserDetailedPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="edit/"
+                element={
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <UserEditPage />
+                  </Suspense>
+                }
+              />
+            </Route>
+
             <Route
               path="/query/:query"
               element={

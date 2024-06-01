@@ -208,10 +208,10 @@ function BeatDetailedPage() {
 
           {user && user._id === beatState.owner ? (
             <>
-              <Button type="outlined-button" submit={handleBeatEdit}>
+              <Button type="normal-button" submit={handleBeatEdit}>
                 Edit
               </Button>
-              <Button type="outlined-button" submit={handleBeatDelete}>
+              <Button type="normal-button" submit={handleBeatDelete}>
                 Delete
               </Button>
             </>
