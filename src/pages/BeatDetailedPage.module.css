@@ -1,7 +1,199 @@
+.pageWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .detailedPage {
+  display: grid;
+  grid-template-rows: 1fr auto auto auto auto;
+  width: 60vw;
+  margin-top: 4rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  transition: all 0.2s ease;
+}
+
+.detailedPage:hover {
+  border-color: var(--secondary-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 12px 0 rgba(0, 0, 0, 0.07);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.summary {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  gap: 30px;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+#cover {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.beatTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.beatName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.beatSummary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: var(--secondary-color);
+}
+
+.dividerWrapperVertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85%;
+}
+
+.dividerWrapperHorizontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10px;
+  width: 100%;
+}
+
+.dividerVertical {
+  width: 1px;
+  height: 100px;
+  background-color: #f0f0f0;
+}
+
+.dividerHorizontal {
+  width: 100px;
+  height: 1px;
+  background-color: #f0f0f0;
+}
+
+.attributes {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+.attributeSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.attributeWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.attributeTitle {
+  color: gray;
+}
+
+.attributeValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.descriptionTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.descriptionText {
+  color: gray;
+}
+
+.operations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+.tracksWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.addTrackSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.otherSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }

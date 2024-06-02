@@ -26,14 +26,6 @@ function NavBar() {
     navigate(`/profile/user`);
   }
 
-  function handleBeatsButton() {
-    if (user) {
-      return "/user/beats";
-    } else {
-      return "/query/the weeknd";
-    }
-  }
-
   useEffect(() => {
     if (user && user.photo) {
       setAvatar(
@@ -51,7 +43,7 @@ function NavBar() {
       <Header>The Beat Stop</Header>
       <ul>
         <NavItem link="/">Home</NavItem>
-        <NavItem link={handleBeatsButton()}>Beats</NavItem>
+        <NavItem link="query/the weeknd">Beats</NavItem>
         <NavItem link="/pricing">Pricing</NavItem>
         <NavItem link="#">About</NavItem>
       </ul>

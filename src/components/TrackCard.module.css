@@ -1,4 +1,32 @@
+.trackCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.trackCard:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+  scale: 1.02;
+}
+
+.trackCardInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 .deleteIcon {
   color: red;
+  cursor: pointer;
+}
+
+.downloadIcon {
+  color: green;
   cursor: pointer;
 }

@@ -57,14 +57,7 @@ function App() {
                 </Suspense>
               }
             />
-            <Route
-              path="/user/beats"
-              element={
-                <Suspense fallback={<LoadingIndicator />}>
-                  <UserBeatsPage />
-                </Suspense>
-              }
-            />
+
             <Route
               path="/create-beat"
               element={
@@ -112,6 +105,14 @@ function App() {
                 element={
                   <Suspense fallback={<LoadingIndicator />}>
                     <UserEditPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="beats"
+                element={
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <UserBeatsPage />
                   </Suspense>
                 }
               />

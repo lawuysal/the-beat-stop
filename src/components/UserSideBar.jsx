@@ -1,5 +1,5 @@
 import STYLES from "./UserSideBar.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserSideBar() {
@@ -15,7 +15,10 @@ function UserSideBar() {
   ];
 
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(() => {
+    if (window.location.href.includes("/profile/user")) return 0;
+    if (window.location.href.includes("/profile/beats")) return 1;
+  });
 
   function handleMenuNavigate(index) {
     switch (index) {
@@ -25,14 +28,16 @@ function UserSideBar() {
         break;
       case 1:
         setSelected(1);
-        navigate(`edit`);
+        navigate(`beats`);
         break;
       case 2:
         return `/user/sold-beats`;
       case 3:
         return `/user/purchased-beats`;
       case 4:
-        return `/user/edit`;
+        setSelected(4);
+        navigate(`edit`);
+        break;
       case 5:
         return `/user/change-profile-photo`;
       case 6:
@@ -43,6 +48,11 @@ function UserSideBar() {
         return `/user`;
     }
   }
+
+  useEffect(() => {
+    if (window.location.href.includes("/profile/user")) setSelected(0);
+    if (window.location.href.includes("/profile/beats")) setSelected(1);
+  }, [window.location.href]);
 
   return (
     <div className={STYLES.sideBar}>

@@ -20,7 +20,7 @@ const PricingPage = () => {
           content={["Can buy beats"]}
         ></PlanCard>
         <PlanCard
-          name="Standart"
+          name="Standard"
           detail="For the artists and producers"
           price="20"
           paymentDetail="Billed annually"

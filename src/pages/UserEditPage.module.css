@@ -1,6 +1,61 @@
 .editPage {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  width: 50vw;
+  margin-top: 4rem;
+  row-gap: 1rem;
+  border: 2px solid var(--primary-color);
+  padding: 5rem 5rem 2rem 5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  transition: all 0.2s ease;
+}
+
+.editPage:hover {
+  border-color: var(--secondary-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 12px 0 rgba(0, 0, 0, 0.07);
+}
+
+.editPage h1 {
+  color: var(--primary-color);
+}
+
+.namesWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4rem;
+  width: 100%;
+}
+
+.comboWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4rem;
+  width: 100%;
+}
+
+.membershipWrapper {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.labelWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin-bottom: 5px;
+  color: var(--primary-color);
+}
+
+.comboBox {
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  padding-inline-start: 10px;
+  background-color: white;
+}
+
+.buttonWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }

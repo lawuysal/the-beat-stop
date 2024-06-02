@@ -2,6 +2,7 @@ import STYLES from "./TrackCard.module.css";
 import { serverURLs } from "./../util/constans";
 
 import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillCloudDownloadFill } from "react-icons/bs";
 
 import { useEffect, useState } from "react";
 import LoadingIndicator from "./LoadingIndicator";
@@ -55,13 +56,16 @@ function TrackCard({ trackId, beatId }) {
     <div className={STYLES.trackCard}>
       <div className={STYLES.trackCardInfo}>
         {!isTrackLoading ? (
-          <span>
+          <>
             <p>{track.name}</p>
             <BsFillTrashFill
               className={STYLES.deleteIcon}
               onClick={handleTrackDelete}
             ></BsFillTrashFill>
-          </span>
+            <BsFillCloudDownloadFill
+              className={STYLES.downloadIcon}
+            ></BsFillCloudDownloadFill>
+          </>
         ) : (
           <LoadingIndicator></LoadingIndicator>
         )}

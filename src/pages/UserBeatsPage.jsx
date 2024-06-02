@@ -10,7 +10,7 @@ function UserBeatsPage() {
     <div className={`${STYLES.userBeatsPageRow}`}>
       <div className={`${STYLES.userBeatsPageColumn}`}>
         <div className={`${STYLES.header}`}>
-          <h1 className="beats-page-title">Your Beats:</h1>
+          <h1 className="beats-page-title">My Beats:</h1>
           <Button type="normal-button" submit={() => navigate(`/create-beat`)}>
             Create New Beat
           </Button>

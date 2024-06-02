@@ -12,6 +12,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
 import TrackCard from "../components/TrackCard";
 import InputBox from "../components/InputBox";
+import Hashtag from "../components/Hashtag";
 
 function BeatDetailedPage() {
   const initialBeatState = {
@@ -152,74 +153,150 @@ function BeatDetailedPage() {
       setIsUserLoading(false);
     }
   }, [user]);
+
+  if (isUserLoading) {
+    return <LoadingIndicator></LoadingIndicator>;
+  }
+
   return (
     <>
       {!isBeatLoading ? (
-        <div className={STYLES.detailedPage}>
-          <h1>Beat Detailed Page</h1>
-          <img
-            src={`${serverURLs.BEAT_IMAGES}/${convertPath(
-              beatState.photo,
-              "beatPhoto"
-            )}`}
-            alt=""
-          />
-          <p>Name: {`${beatState.name}`}</p>
-          <p>Summary: {`${beatState.summary}`}</p>
-          <p>Description: {`${beatState.description}`} </p>
-          <p>Key: {`${beatState.key}`} </p>
-          <p>BPM: {`${beatState.bpm}`} </p>
-          <p>License: {`${beatState.license}`} </p>
-          <p>Avaliable: {!beatState.paid ? "Yes" : "No"} </p>
-          <p>Styles: {beatState.type.map((e) => `${e},`)} </p>
-          <p>Tracks:</p>
-          {beatState.tracks[0] ? (
-            beatState.tracks.map((e, i) => (
-              <TrackCard trackId={e} beatId={beatState._id} key={i} />
-            ))
-          ) : (
-            <p>No tracks available</p>
-          )}
-          {user && user._id === beatState.owner ? (
-            <Button
-              type="outlined-button"
-              submit={() => setIsAddTrackMode(!isAddTrackMode)}
-            >
-              Add Track
-            </Button>
-          ) : (
-            <></>
-          )}
-          {!isAddTrackMode ? (
-            <></>
-          ) : (
-            <>
-              <InputBox
-                type="file"
-                accept="audio/*"
-                callback={handleAddTrack}
-                error={trackFileError}
-              ></InputBox>
-              <Button type="normal-button" submit={handleUploadTrack}>
-                Upload
-              </Button>
-            </>
-          )}
-
-          {user && user._id === beatState.owner ? (
-            <>
-              <Button type="normal-button" submit={handleBeatEdit}>
-                Edit
-              </Button>
-              <Button type="normal-button" submit={handleBeatDelete}>
-                Delete
-              </Button>
-            </>
-          ) : (
-            <Button type="normal-button" submit={handleNavigateBuyPage}>
-              Buy
-            </Button>
-          )}
+        <div className={STYLES.pageWrapper}>
+          <div className={STYLES.detailedPage}>
+            <div className={STYLES.main}>
+              <div className={STYLES.summary}>
+                <img
+                  src={`${serverURLs.BEAT_IMAGES}/${convertPath(
+                    beatState.photo,
+                    "beatPhoto"
+                  )}`}
+                  alt="beat-photo"
+                  id={STYLES.cover}
+                />
+                <div className={STYLES.beatTitle}>
+                  <p className={STYLES.beatName}>{`${beatState.name}`}</p>
+                  <p
+                    className={STYLES.beatSummary}
+                  >{`"${beatState.summary}"`}</p>
+                </div>
+              </div>
+              <div className={STYLES.dividerWrapperVertical}>
+                <div className={STYLES.dividerVertical}></div>
+              </div>
+              <div className={STYLES.attributes}>
+                <div className={STYLES.attributeSection}>
+                  <div className={STYLES.attributeWrapper}>
+                    <p className={STYLES.attributeTitle}>KEY</p>
+                    <p className={STYLES.attributeValue}>
+                      {`${beatState.key.toUpperCase()}`}{" "}
+                    </p>
+                  </div>
+                  <div className={STYLES.attributeWrapper}>
+                    <p className={STYLES.attributeTitle}>BPM</p>
+                    <p className={STYLES.attributeValue}>
+                      {`${beatState.bpm}`}{" "}
+                    </p>
+                  </div>
+                </div>
+                <div className={STYLES.attributeSection}>
+                  <div className={STYLES.attributeWrapper}>
+                    <p className={STYLES.attributeTitle}>LICENSE</p>
+                    <p className={STYLES.attributeValue}>
+                      {`${beatState.license.toUpperCase()}`}{" "}
+                    </p>
+                  </div>
+                  <div className={STYLES.attributeWrapper}>
+                    <p className={STYLES.attributeTitle}>STATUS</p>
+                    <p className={STYLES.attributeValue}>
+                      {!beatState.paid ? "SOLD" : "AVALIABLE"}{" "}
+                    </p>
+                  </div>
+                </div>
+                <div className={STYLES.attributeWrapper}>
+                  <p className={STYLES.attributeTitle}>STYLES</p>
+                  <div className={STYLES.hashtags}>
+                    {beatState.type.map((type, index) => (
+                      <Hashtag key={index}>{type}</Hashtag>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={STYLES.dividerWrapperHorizontal}>
+              <div className={STYLES.dividerHorizontal}></div>
+            </div>
+            <div className={STYLES.secondary}>
+              <div className={STYLES.description}>
+                <p className={STYLES.descriptionTitle}>Description</p>
+                <p className={STYLES.descriptionText}>
+                  {`"${beatState.description}"`}{" "}
+                </p>
+              </div>
+              <div className={STYLES.otherSection}>
+                {user && user._id === beatState.owner ? (
+                  <>
+                    <Button type="normal-button" submit={handleBeatEdit}>
+                      Edit Beat
+                    </Button>
+                    <Button type="normal-button">Download Beat</Button>
+                    <Button type="outlined-button" submit={handleBeatDelete}>
+                      Delete Beat
+                    </Button>
+                  </>
+                ) : (
+                  <Button type="normal-button" submit={handleNavigateBuyPage}>
+                    Buy Beat
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div className={STYLES.dividerWrapperHorizontal}>
+              <div className={STYLES.dividerHorizontal}></div>
+            </div>
+            <div className={STYLES.operations}>
+              <div className={STYLES.tracksWrapper}>
+                <p className={STYLES.attributeTitle}>
+                  TRACKS ( {beatState.tracks.length} )
+                </p>
+                {beatState.tracks[0] ? (
+                  beatState.tracks.map((e, i) => (
+                    <TrackCard trackId={e} beatId={beatState._id} key={i} />
+                  ))
+                ) : (
+                  <p>No tracks available</p>
+                )}
+              </div>
+              <div className={STYLES.buttons}>
+                {!isAddTrackMode ? (
+                  <></>
+                ) : (
+                  <>
+                    <InputBox
+                      type="file"
+                      accept="audio/*"
+                      callback={handleAddTrack}
+                      error={trackFileError}
+                    ></InputBox>
+                    <Button type="outlined-button" submit={handleUploadTrack}>
+                      Upload
+                    </Button>
+                  </>
+                )}
+                <div className={STYLES.addTrackSection}>
+                  {user && user._id === beatState.owner ? (
+                    <Button
+                      type="normal-button"
+                      submit={() => setIsAddTrackMode(!isAddTrackMode)}
+                    >
+                      {!isAddTrackMode ? "Add Track" : "Cancel"}
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <LoadingIndicator></LoadingIndicator>

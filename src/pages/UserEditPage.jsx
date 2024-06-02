@@ -142,7 +142,7 @@ export default function UserEditPage() {
             toast.success("Profile updated successfully");
             setUser(null);
             setTimeout(() => {
-              navigate(`/user/detailed/${user._id}`);
+              navigate(`/profile/user`);
             }, 500);
           } else {
             toast.error(data.message);
@@ -166,23 +166,25 @@ export default function UserEditPage() {
 
   return (
     <div className={STYLES.editPage}>
-      <h1>Edit User Page</h1>
-      <InputBox
-        type="text"
-        callback={handleNameChange}
-        error={validationData.name}
-        preText={dataState.name}
-      >
-        Name:
-      </InputBox>
-      <InputBox
-        type="text"
-        callback={handleUsernameChange}
-        error={validationData.username}
-        preText={dataState.username}
-      >
-        Username:
-      </InputBox>
+      <h1>Edit Profile:</h1>
+      <div className={STYLES.namesWrapper}>
+        <InputBox
+          type="text"
+          callback={handleNameChange}
+          error={validationData.name}
+          preText={dataState.name}
+        >
+          Name:
+        </InputBox>
+        <InputBox
+          type="text"
+          callback={handleUsernameChange}
+          error={validationData.username}
+          preText={dataState.username}
+        >
+          Username:
+        </InputBox>
+      </div>
       <InputBox
         type="text"
         callback={handleDescriptionChange}
@@ -191,20 +193,36 @@ export default function UserEditPage() {
       >
         Description:
       </InputBox>
-      <label>Membership:</label>
-      <select onChange={handleMembershipChange} value={dataState.membership}>
-        <option value="free">Free</option>
-        <option value="pro">Pro</option>
-        <option value="premium">Premium</option>
-      </select>
-      <label>Mail List:</label>
-      <select onChange={handleMailListChange} value={dataState.mailList}>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-      <Button type="normal-button" submit={handleUpdateRequest}>
-        Update Profile
-      </Button>
+      <div className={STYLES.comboWrapper}>
+        <div className={STYLES.membershipWrapper}>
+          <label className={STYLES.labelWrapper}>Membership:</label>
+          <select
+            onChange={handleMembershipChange}
+            value={dataState.membership}
+            className={STYLES.comboBox}
+          >
+            <option value="free">Free</option>
+            <option value="standar">Standard</option>
+            <option value="premium">Premium</option>
+          </select>
+        </div>
+        <div className={STYLES.membershipWrapper}>
+          <label className={STYLES.labelWrapper}>Mail List:</label>
+          <select
+            onChange={handleMailListChange}
+            value={dataState.mailList}
+            className={STYLES.comboBox}
+          >
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+      </div>
+      <div className={STYLES.buttonWrapper}>
+        <Button type="normal-button" submit={handleUpdateRequest}>
+          Update Profile
+        </Button>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 60vw;
 }
 
 .userBeatsPageColumn {
@@ -11,7 +12,7 @@
   flex-direction: column;
   gap: 20px;
   transition: all 0.3s ease;
-  width: 55vw;
+  width: 85vw;
 }
 
 .header {
