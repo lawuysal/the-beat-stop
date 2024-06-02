@@ -9,9 +9,10 @@
 }
 
 .plansWrapper {
-  width: 100%;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 80vw;
   height: auto;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  margin: 0 auto;
 }

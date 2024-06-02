@@ -1,0 +1,55 @@
+.cardWrapper {
+  border-radius: 16px;
+  box-shadow: 0 30px 30px -25px rgba(0, 38, 255, 0.205);
+  padding: 10px;
+  background-color: var(--background-color);
+  font-family: "Roboto Flex", sans-serif;
+  color: var(--primary-color);
+  width: 320px;
+  max-width: 320px;
+}
+
+.cardWrapper ul {
+  list-style-type: none;
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.cardWrapper li {
+  display: inline-block;
+}
+
+.innerWrapper {
+  display: grid;
+  grid-template-rows: 150px 50px 75px 75px;
+  align-items: center;
+  padding: 20px;
+  padding-top: 40px;
+  border-radius: 12px;
+  position: relative;
+  background-color: white;
+}
+
+.planName {
+  font-size: 32px;
+}
+
+.planPrice {
+  padding-bottom: 2px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.planDetail {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
+.paymentDetail {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
+.button {
+  width: 260px;
+}

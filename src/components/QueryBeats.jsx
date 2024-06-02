@@ -45,7 +45,7 @@ const QueryBeats = ({ setResultsCount }) => {
 
   return (
     <>
-      <div className={`${STYLES.beats}`}>
+      <div className={STYLES.beats}>
         {!isBeatsLoading ? (
           isThereBeats ? (
             beats.map((beat, index) => (

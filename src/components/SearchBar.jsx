@@ -1,4 +1,4 @@
-import "./../components/SearchBar.css";
+import STYLES from "./../components/SearchBar.module.css";
 import { useEffect, useRef, useState } from "react";
 
 const SearchBar = ({ onSearchQueryChange, defaultQuery }) => {
@@ -15,11 +15,11 @@ const SearchBar = ({ onSearchQueryChange, defaultQuery }) => {
   }, []);
 
   return (
-    <div className="searchbar">
-      <div className="searchbar-wrapper">
-        <div className="searchbar-left">
-          <div className="search-icon-wrapper">
-            <span className="search-icon searchbar-icon">
+    <div className={STYLES.searchbar}>
+      <div className={STYLES.searchbarWrapper}>
+        <div className={STYLES.searchbarLeft}>
+          <div className={STYLES.searchIconWrapper}>
+            <span className={`${STYLES.searchIcon} ${STYLES.searchbarIcon}`}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
               </svg>
@@ -27,14 +27,14 @@ const SearchBar = ({ onSearchQueryChange, defaultQuery }) => {
           </div>
         </div>
 
-        <div className="searchbar-center">
-          <div className="searchbar-input-spacer"></div>
+        <div className={STYLES.searchbarCenter}>
+          <div className={STYLES.searchbarInputSpacer}></div>
 
           <input
             value={searchQuery}
             onChange={handleSearchQueryChange}
             type="text"
-            className="searchbar-input"
+            className={STYLES.searchbarInput}
             maxLength="2048"
             name="q"
             autoCapitalize="off"

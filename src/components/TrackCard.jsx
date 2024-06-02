@@ -1,4 +1,4 @@
-import("./TrackCard.css");
+import STYLES from "./TrackCard.module.css";
 import { serverURLs } from "./../util/constans";
 
 import { BsFillTrashFill } from "react-icons/bs";
@@ -52,13 +52,13 @@ function TrackCard({ trackId, beatId }) {
   );
 
   return (
-    <div className="track-card">
-      <div className="track-card__info">
+    <div className={STYLES.trackCard}>
+      <div className={STYLES.trackCardInfo}>
         {!isTrackLoading ? (
           <span>
             <p>{track.name}</p>
             <BsFillTrashFill
-              className="delete-icon"
+              className={STYLES.deleteIcon}
               onClick={handleTrackDelete}
             ></BsFillTrashFill>
           </span>

@@ -1,13 +1,10 @@
-import "./../components/NavItem.css";
+import STYLES from "./../components/NavItem.module.css";
 import { Link } from "react-router-dom";
 
 const NavItem = ({ children, link }) => {
   return (
     <li>
-      {/* <a href={link} className="nav-item">
-        {text}
-      </a> */}
-      <Link to={link} className="nav-item">
+      <Link to={link} className={STYLES.navItem}>
         {children}
       </Link>
     </li>

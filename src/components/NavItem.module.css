@@ -1,0 +1,10 @@
+.navItem {
+  font-size: 14px;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 500;
+  color: #0f4c75;
+}
+
+.navItem li {
+  display: inline-block;
+}
