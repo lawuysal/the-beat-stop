@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
 
-.normal-button {
+.normalButton {
   text-decoration: none;
   position: relative;
   border: none;
@@ -9,7 +9,6 @@
   font-weight: 500;
   cursor: pointer;
   color: #fff;
-  /* width: 8em; */
   width: auto;
   min-width: 8em;
   height: 3em;
@@ -22,14 +21,13 @@
   transition: all 0.1s ease;
 }
 
-.outlined-button {
+.outlinedButton {
   text-decoration: none;
   position: relative;
   font-size: 14px;
   font-family: "Roboto Flex", sans-serif;
   cursor: pointer;
   color: #0f4c75;
-  /* width: 8em; */
   width: auto;
   min-width: 8em;
   height: 3em;
@@ -43,7 +41,7 @@
   transition: all 0.1s ease;
 }
 
-.text-button {
+.textButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -60,12 +58,12 @@
   letter-spacing: 0.5px;
 }
 
-.normal-button:hover {
+.normalButton:hover {
   background: var(--secondary-color);
   color: #fff;
   transition: all 0.1s ease;
 }
 
-.outlined-button:hover {
+.outlinedButton:hover {
   background: var(--light-color);
 }

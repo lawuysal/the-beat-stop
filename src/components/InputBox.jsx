@@ -1,23 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-
-const boxStyle = {
-  border: "1px solid #0f4c75",
-  fontSize: "14px",
-  borderRadius: "4px",
-  margin: "4px 0",
-  padding: "8px 16px",
-  height: "42px",
-  maxHeight: "42px",
-  boxSizing: "border-box",
-  width: "100%",
-};
-
-const wrapperStyle = {
-  color: "#0f4c75",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "flex-end",
-};
+import STYLES from "./InputBox.module.css";
 
 export default function InputBox({
   children,
@@ -54,12 +36,12 @@ export default function InputBox({
   return (
     <div>
       <>
-        <div style={wrapperStyle}>
+        <div className={STYLES.wrapperStyle}>
           <p>{children}</p>
         </div>
         <input
           type={type}
-          style={boxStyle}
+          className={STYLES.boxStyle}
           value={type === "file" ? undefined : value}
           accept={accept}
           onChange={(e) => handleValue(e)}

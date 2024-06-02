@@ -1,4 +1,4 @@
-import "./../pages/HomePage.css";
+import STYLES from "./../pages/HomePage.module.css";
 import SearchBar from "../components/SearchBar";
 import AudioPlayer from "../components/AudioPlayer";
 import { useKeyboardKey } from "../hooks/useKeyboardKey";
@@ -21,7 +21,7 @@ function MainPage() {
 
   return (
     <>
-      <div className="slogan">
+      <div className={STYLES.slogan}>
         <br />
         <h1>Search and Find The Beats</h1>
         <h1>That Fit Your Style</h1>

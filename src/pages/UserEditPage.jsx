@@ -1,6 +1,6 @@
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
-import classes from "./UserEditPage.module.css";
+import STYLES from "./UserEditPage.module.css";
 import { useState, useEffect, useReducer } from "react";
 import LoadingIndicator from "../components/LoadingIndicator";
 import InputBox from "../components/InputBox";
@@ -165,7 +165,7 @@ export default function UserEditPage() {
   }
 
   return (
-    <div className={`${classes.editPage}`}>
+    <div className={STYLES.editPage}>
       <h1>Edit User Page</h1>
       <InputBox
         type="text"

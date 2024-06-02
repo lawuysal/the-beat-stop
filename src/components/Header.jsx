@@ -1,10 +1,10 @@
-import "./../components/Header.css";
+import STYLES from "./../components/Header.module.css";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ children }) => {
   const navigate = useNavigate();
   return (
-    <header className="header-text" onClick={() => navigate("/")}>
+    <header className={STYLES.headerText} onClick={() => navigate("/")}>
       {children}
     </header>
   );

@@ -1,29 +1,4 @@
-:root {
-  --primary-color: #0f4c75;
-  --secondary-color: #3282b8;
-  --background-color: #bbe1fa;
-  --light-color: #f9f9f9;
-  --dark-color: #1b262c;
-}
-
-p {
-  color: var(--dark-color);
-  font-weight: 200;
-  font-size: 0.8rem;
-}
-
-h3 {
-  color: var(--primary-color);
-}
-
-img {
-  width: 2rem;
-  height: 2rem;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.card-container {
+.cardContainer {
   display: grid;
   grid-template-columns: 1fr 3fr 15fr 3fr;
   align-items: center;
@@ -38,29 +13,46 @@ img {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
 }
 
-.card-container:hover {
+.cardContainer p {
+  color: var(--dark-color);
+  font-weight: 200;
+  font-size: 0.8rem;
+}
+
+.cardContainer h3 {
+  color: var(--primary-color);
+}
+
+.cardContainer img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cardContainer:hover {
   transform: scale(1.02);
   background-color: var(--background-color);
 }
 
-.card-container > :last-child {
+.cardContainer > :last-child {
   justify-self: start;
 }
 
-.cover-wrapper {
+.coverWrapper {
   display: flex;
   border-radius: 10px;
 
   border: 1px solid var(--primary-color);
 }
 
-#cover-image {
+#coverImage {
   width: 65px;
   height: 65px;
   object-fit: scale-down;
 }
 
-.beat-info {
+.beatInfo {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -68,7 +60,7 @@ img {
   gap: 0.5rem;
 }
 
-.beat-title {
+.beatTitle {
   display: grid;
   align-items: center;
   grid-template-columns: 2fr 3fr;
@@ -84,7 +76,7 @@ img {
   gap: 0.5rem;
 }
 
-.alt-info {
+.altInfo {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -92,7 +84,7 @@ img {
   gap: 1rem;
 }
 
-.play-button {
+.playButton {
   cursor: pointer;
   font-size: 2rem;
   color: var(--primary-color);

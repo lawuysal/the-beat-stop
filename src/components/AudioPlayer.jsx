@@ -30,7 +30,7 @@ const AudioPlayer = () => {
         onPlay={() => console.log("onPlay")}
         ref={audioRef}
         header={
-          <div className="song-info">
+          <div className="ap-song-info">
             <img
               src={
                 track && track.cover
@@ -40,11 +40,11 @@ const AudioPlayer = () => {
               alt="photo"
               style={{ width: "65px", height: "65px", objectFit: "scale-down" }}
             />
-            <div className="texts">
-              <p className="song-name">
+            <div className="ap-texts">
+              <p className="ap-song-name">
                 {track && track.songName ? track.songName : "Song Name"}
               </p>
-              <p className="artist-name">
+              <p className="ap-artist-name">
                 {track && track.artistName ? track.artistName : "Artist Name"}
               </p>
             </div>

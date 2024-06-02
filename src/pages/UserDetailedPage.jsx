@@ -1,6 +1,6 @@
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
-import classes from "./UserDetailedPage.module.css";
+import STYLES from "./UserDetailedPage.module.css";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -26,7 +26,7 @@ export default function UserDetailedPage() {
   }
 
   return (
-    <div className={`${classes.userPage}`}>
+    <div className={STYLES.userPage}>
       <div>
         <h1>User Detailed Page</h1>
         <p>{user.name}</p>

@@ -1,31 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
-
-.signup-wrapper {
+.signupWrapper {
   height: 600px;
   display: flex;
   align-items: star;
 }
 
-p {
+.signupWrapper p {
   font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
 }
 
-h2,
-h4 {
+.signupWrapper h2,
+.signupWrapper h4 {
   font-family: "Roboto Flex", sans-serif;
   color: #0f4c75;
 }
 
-.signup-create {
+.signupCreate {
   display: grid;
   width: 460px;
-
   height: 600px;
-  /* justify-content: center; */
 }
 
-.signup-google {
+.signupGoogle {
   display: grid;
   grid-template-columns: 380px;
   width: 100%;
@@ -42,7 +38,7 @@ h4 {
   justify-items: center;
 }
 
-.reset-pass-wrapper {
+.resetPassWrapper {
   display: flex;
   justify-content: flex-end;
   font-family: "Roboto Flex", sans-serif;
@@ -50,7 +46,7 @@ h4 {
   font-size: 14px;
 }
 
-.line-break {
+.lineBreak {
   height: 1px;
   width: 160px;
   background-color: grey;
@@ -62,13 +58,13 @@ h4 {
   align-items: center;
 }
 
-.checkbox-wrapper {
+.checkboxWrapper {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-#chk-1 {
+#chk1 {
   transform: scale(1.5);
 }
 

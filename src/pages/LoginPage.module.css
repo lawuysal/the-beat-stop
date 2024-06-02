@@ -1,17 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
-
-.login-wrapper {
+.loginWrapper {
   height: 80%;
   display: flex;
 }
 
-p {
+.loginWrapper p {
   font-family: "Roboto Flex", sans-serif;
   font-size: 14px;
 }
 
-h2,
-h4 {
+.loginWrapper h2,
+.loginWrapper h4 {
   font-family: "Roboto Flex", sans-serif;
   color: #0f4c75;
 }
@@ -26,21 +24,21 @@ h4 {
   align-items: center;
 }
 
-.reset-pass-wrapper {
+.resetPassWrapper {
   display: flex;
   justify-content: flex-end;
   font-family: "Roboto Flex", sans-serif;
   text-decoration: none;
   font-size: 14px;
 }
-.pass-text-wrapper,
-.email-text-wrapper {
+.passTextWrapper,
+.emailTextWrapper {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
 }
 
-.line-break {
+.lineBreak {
   height: 1px;
   width: 160px;
   background-color: grey;
@@ -52,8 +50,8 @@ h4 {
   align-items: center;
 }
 
-.email-input,
-.pass-input {
+.emailInput,
+.passInput {
   border: 1px solid #0f4c75;
   font-size: 14px;
   border-radius: 4px;
@@ -62,7 +60,7 @@ h4 {
   max-height: 26px;
 }
 
-.dont-have {
+.dontHave {
   display: flex;
   gap: 10px;
   justify-content: flex-start;

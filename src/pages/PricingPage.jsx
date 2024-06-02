@@ -1,17 +1,17 @@
-import "./../pages/PricingPage.css";
+import STYLES from "./../pages/PricingPage.module.css";
 import PlanCard from "../components/PlanCard";
 
 const PricingPage = () => {
   return (
     <>
-      <div className="slogan">
+      <div className={STYLES.slogan}>
         <br />
         <h2>Join Us With The Best Plan</h2>
         <h2>That Suits You</h2>
       </div>
       <br />
       <br />
-      <div className="plans-wrapper">
+      <div className={STYLES.plansWrapper}>
         <PlanCard
           name="Free"
           detail="For the artists and singers"

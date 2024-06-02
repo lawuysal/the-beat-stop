@@ -1,4 +1,4 @@
-import("./CreateBeatPage.css");
+import STYLES from "./CreateBeatPage.module.css";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import validator from "validator";
@@ -217,7 +217,7 @@ export default function CreateBeatPage() {
 
   return (
     <>
-      <div className="create-new-beat-page">
+      <div className={STYLES.createNewBeatPage}>
         <h1>Create a New Beat</h1>
         <InputBox
           type="text"
@@ -247,7 +247,7 @@ export default function CreateBeatPage() {
           BPM
         </InputBox>
         <label>License:</label>
-        <select className="license-dropdown" onChange={handleLicense}>
+        <select className={STYLES.licenseDropdown} onChange={handleLicense}>
           <option value="free">Free</option>
           <option value="basic">Basic</option>
           <option value="standard">Standard</option>

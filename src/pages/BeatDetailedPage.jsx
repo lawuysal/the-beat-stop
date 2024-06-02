@@ -1,4 +1,4 @@
-import classes from "./BeatDetailedPage.module.css";
+import STYLES from "./BeatDetailedPage.module.css";
 
 import { useEffect, useReducer, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -155,7 +155,7 @@ function BeatDetailedPage() {
   return (
     <>
       {!isBeatLoading ? (
-        <div className={`${classes.detailedPage}`}>
+        <div className={STYLES.detailedPage}>
           <h1>Beat Detailed Page</h1>
           <img
             src={`${serverURLs.BEAT_IMAGES}/${convertPath(

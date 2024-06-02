@@ -1,4 +1,4 @@
-import classes from "./BeatEditPage.module.css";
+import STYLES from "./BeatEditPage.module.css";
 import LoadingIndicator from "../components/LoadingIndicator";
 import InputBox from "../components/InputBox";
 import useBeat from "../hooks/useBeat";
@@ -13,7 +13,7 @@ function EditBeatPage() {
 
   return (
     <>
-      <div className={`${classes.editPage}`}>
+      <div className={STYLES.editPage}>
         {isBeatLoading ? (
           <LoadingIndicator></LoadingIndicator>
         ) : (
@@ -69,7 +69,7 @@ function EditBeatPage() {
             </InputBox>
             <label>License:</label>
             <select
-              className="license-dropdown"
+              className={STYLES.licenseDropdown}
               onChange={handleFunctions.handleLicense}
             >
               <option value="free">Free</option>

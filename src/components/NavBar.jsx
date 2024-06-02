@@ -1,4 +1,4 @@
-import "./../components/NavBar.css";
+import STYLES from "./../components/NavBar.module.css";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import NavItem from "../components/NavItem";
@@ -47,7 +47,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="navbar">
+    <nav className={STYLES.navbar}>
       <Header>The Beat Stop</Header>
       <ul>
         <NavItem link="/">Home</NavItem>
@@ -56,23 +56,23 @@ function NavBar() {
         <NavItem link="#">About</NavItem>
       </ul>
       {user ? (
-        <div className="signed-user">
+        <div className={STYLES.signedUser}>
           <p>Welcome, {user.name}</p>
           {avatar && (
             <img
               src={avatar}
               alt={`${user.name} avatar`}
-              className="rounded-avatar"
+              className={STYLES.roundedAvatar}
               onClick={handleNavigateUserPage}
             />
           )}
           <BsBoxArrowRight
-            className="signout-icon"
+            className={STYLES.signoutIcon}
             onClick={handleSignedOut}
           ></BsBoxArrowRight>
         </div>
       ) : (
-        <div className="login-buttons">
+        <div className={STYLES.loginButtons}>
           <Button type="normal-button" submit={() => navigate("/pricing")}>
             Sign Up
           </Button>

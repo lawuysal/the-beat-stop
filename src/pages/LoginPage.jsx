@@ -1,4 +1,4 @@
-import "./../pages/LoginPage.css";
+import STYLES from "./../pages/LoginPage.module.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 
@@ -41,20 +41,17 @@ const LoginPage = () => {
         } else {
           toast.error(data.message);
         }
-
-        console.log(data);
       })
       .catch((error) => console.log(error));
   }
-
   return (
     <>
       <br />
       <br />
-      <div className="login-wrapper">
-        <div className="login">
+      <div className={STYLES.loginWrapper}>
+        <div className={STYLES.login}>
           <h2>Log in</h2>
-          <div className="dont-have">
+          <div className={STYLES.dontHave}>
             <h4>Don&apos;t have an account?</h4>
             <Button type="text-button">Sign up</Button>
           </div>
@@ -65,7 +62,7 @@ const LoginPage = () => {
           <InputBox type="password" callback={handlePasswordChange}>
             Password
           </InputBox>
-          <div className="reset-pass-wrapper">
+          <div className={STYLES.resetPassWrapper}>
             <a href="#">Reset password</a>
           </div>
           <Button type="normal-button" submit={handleSubmit}>

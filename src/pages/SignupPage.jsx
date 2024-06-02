@@ -1,4 +1,4 @@
-import "./../pages/SignupPage.css";
+import STYLES from "./../pages/SignupPage.module.css";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import { useReducer, useEffect } from "react";
@@ -186,16 +186,16 @@ const SignupPage = () => {
     <>
       <br />
       <br />
-      <div className="signup-wrapper">
-        <div className="wrapper">
-          <div className="signup-create">
-            <div className="heading">
+      <div className={STYLES.signupWrapper}>
+        <div className={STYLES.wrapper}>
+          <div className={STYLES.signupCreate}>
+            <div className={STYLES.heading}>
               <h2>Sign up</h2>
               <h4>
                 Have an account? <a href="#">Log In</a>
               </h4>
             </div>
-            <div className="forms">
+            <div className={STYLES.forms}>
               <InputBox
                 type="text"
                 callback={handleUsername}
@@ -232,11 +232,11 @@ const SignupPage = () => {
                 Confirm Password:
               </InputBox>
             </div>
-            <div className="checkbox-wrapper">
+            <div className={STYLES.checkboxWrapper}>
               <input
                 type="checkbox"
                 name="get-emails"
-                id="chk-1"
+                id={STYLES.chk1}
                 checked={dataState.mailList}
                 onChange={(e) => handleMailList(e.target.checked)}
               />

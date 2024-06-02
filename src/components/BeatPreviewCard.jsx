@@ -1,4 +1,4 @@
-import("./BeatPreviewCard.css");
+import STYLES from "./BeatPreviewCard.module.css";
 import { serverURLs } from "./../util/constans";
 import { convertPath } from "../util/convertPath";
 
@@ -10,13 +10,7 @@ import Button from "./Button";
 import LoadingIndicator from "./LoadingIndicator";
 import Hashtag from "./Hashtag";
 
-const BeatPreviewCard = ({
-  currentBeat,
-  setCurrentBeat,
-  beat,
-  navigate,
-  page,
-}) => {
+const BeatPreviewCard = ({ currentBeat, setCurrentBeat, beat, navigate }) => {
   const { play, pause, setTrack } = useContext(AudioContext);
   const [isPlaying, setIsPlaying] = useState(false);
   const [beatOwnerName, setBeatOwnerName] = useState("");
@@ -95,25 +89,31 @@ const BeatPreviewCard = ({
   }
 
   return (
-    <div className="card-container">
+    <div className={STYLES.cardContainer}>
       {!isPlaying || currentBeat !== beat._id ? (
-        <BsFillPlayFill onClick={() => handlePlay()} className="play-button" />
+        <BsFillPlayFill
+          onClick={() => handlePlay()}
+          className={STYLES.playButton}
+        />
       ) : (
-        <BsFillPauseFill onClick={() => handlePlay()} className="play-button" />
+        <BsFillPauseFill
+          onClick={() => handlePlay()}
+          className={STYLES.playButton}
+        />
       )}
-      <div className="cover-wrapper">
-        <img src={cover} alt="kljlk" id="cover-image" />
+      <div className={STYLES.coverWrapper}>
+        <img src={cover} alt="kljlk" id={STYLES.coverImage} />
       </div>
-      <div className="beat-info">
-        <div className="beat-title">
+      <div className={STYLES.beatInfo}>
+        <div className={STYLES.beatTitle}>
           <h3>{`${handleBeatName()}`}</h3>
-          <div className="hashtags">
+          <div className={STYLES.hashtags}>
             {beat.type.slice(0, 2).map((type, index) => (
               <Hashtag key={index}>{type}</Hashtag>
             ))}
           </div>
         </div>
-        <div className="alt-info">
+        <div className={STYLES.altInfo}>
           <p>{beatOwnerName} </p>
           <p>|</p>
           <p>{beat.bpm} BPM </p>
