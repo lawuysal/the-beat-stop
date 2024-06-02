@@ -1,11 +1,10 @@
 .sideBar {
   display: grid;
-  grid-template-rows: 2fr 1fr;
   align-items: center;
   justify-items: center;
-  margin-top: 5vh;
-  width: 30vh;
-  height: 80vh;
+  margin-top: 4rem;
+  width: 15vw;
+  height: 50vh;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: var(--background-color);
@@ -19,6 +18,12 @@
   gap: 10px;
   height: 40vh;
   width: 90%;
+}
+
+.buttons > :first-child {
+  margin-left: 15px;
+  align-self: flex-start;
+  color: var(--primary-color);
 }
 
 .button {

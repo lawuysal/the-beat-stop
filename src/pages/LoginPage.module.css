@@ -1,6 +1,7 @@
 .loginWrapper {
   height: 80%;
   display: flex;
+  justify-content: center;
 }
 
 .loginWrapper p {
@@ -15,10 +16,11 @@
 }
 
 .login {
+  padding: 2rem 2rem 1rem 2rem;
   display: grid;
   grid-template-columns: 380px;
   grid-template-rows: 2fr 1fr 4fr 4fr 1fr 1fr;
-  width: 100%;
+  width: 50%;
   height: 300px;
   justify-content: center;
   align-items: center;

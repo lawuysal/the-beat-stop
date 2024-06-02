@@ -7,7 +7,7 @@ import { BsFillCloudDownloadFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import LoadingIndicator from "./LoadingIndicator";
 
-function TrackCard({ trackId, beatId }) {
+function TrackCard({ trackId, beatId, isSold }) {
   const [track, setTrack] = useState({
     name: "",
     path: "",
@@ -55,7 +55,16 @@ function TrackCard({ trackId, beatId }) {
   return (
     <div className={STYLES.trackCard}>
       <div className={STYLES.trackCardInfo}>
-        {!isTrackLoading ? (
+        {isTrackLoading ? (
+          <LoadingIndicator></LoadingIndicator>
+        ) : isSold ? (
+          <>
+            <p>{track.name}</p>
+            <BsFillCloudDownloadFill
+              className={STYLES.downloadIcon}
+            ></BsFillCloudDownloadFill>
+          </>
+        ) : (
           <>
             <p>{track.name}</p>
             <BsFillTrashFill
@@ -66,8 +75,6 @@ function TrackCard({ trackId, beatId }) {
               className={STYLES.downloadIcon}
             ></BsFillCloudDownloadFill>
           </>
-        ) : (
-          <LoadingIndicator></LoadingIndicator>
         )}
       </div>
     </div>

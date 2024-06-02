@@ -5,7 +5,6 @@ const PricingPage = () => {
   return (
     <>
       <div className={STYLES.slogan}>
-        <br />
         <h2>Join Us With The Best Plan</h2>
         <h2>That Suits You</h2>
       </div>

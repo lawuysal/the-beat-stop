@@ -25,6 +25,7 @@
   height: 128px;
   border-radius: 50%;
   border: 1px solid var(--primary-color);
+  object-fit: cover;
 }
 
 .main {

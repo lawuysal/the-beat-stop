@@ -17,6 +17,21 @@ function BeatBuyPage() {
   const [beat, setBeat] = useState(null);
   const [beatOwner, setBeatOwner] = useState(null);
 
+  function handlePrice() {
+    switch (beat.license) {
+      case "free":
+        return 0;
+      case "basic":
+        return 20;
+      case "standard":
+        return 50;
+      case "pro":
+        return 100;
+      default:
+        return 0;
+    }
+  }
+
   function handleBuy() {
     toast.loading("Processing payment...");
     const purchase = {
@@ -85,15 +100,26 @@ function BeatBuyPage() {
   }
 
   return (
-    <div className={`${STYLES.buyPage}`}>
-      <h1>Beat Buy Page</h1>
-      <p>{beatId}</p>
-      <p> {beat.name} </p>
-      <p> {beatOwner.name} </p>
-      <p> {beat.license} </p>
-      <Button type="normal-button" submit={handleBuy}>
-        Complete Payment
-      </Button>
+    <div className={STYLES.buyPageWrapper}>
+      <div className={STYLES.buyPage}>
+        <div className={STYLES.titleWrapper}>
+          <h1 className={STYLES.title}>Beat Purchase</h1>
+        </div>
+        <div className={STYLES.ownerWrapper}>
+          <p className={STYLES.beatName}> {beat.name} </p>
+          <p className={STYLES.by}>by</p>
+          <p className={STYLES.ownerName}> {beatOwner.name} </p>
+        </div>
+        <div className={STYLES.priceWrapper}>
+          <p className={STYLES.price}> {`$${handlePrice()}`} </p>
+          <p className={STYLES.license}>{beat.license} License</p>
+        </div>
+        <div className={STYLES.buttonWrapper}>
+          <Button type="normal-button" submit={handleBuy}>
+            Complete Payment
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

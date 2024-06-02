@@ -15,7 +15,7 @@ function UserBeatsPage() {
             Create New Beat
           </Button>
         </div>
-        <Beats />
+        <Beats page="user-beats" />
       </div>
     </div>
   );

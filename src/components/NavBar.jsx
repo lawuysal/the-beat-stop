@@ -45,11 +45,11 @@ function NavBar() {
         <NavItem link="/">Home</NavItem>
         <NavItem link="query/the weeknd">Beats</NavItem>
         <NavItem link="/pricing">Pricing</NavItem>
-        <NavItem link="#">About</NavItem>
+        {/* <NavItem link="#">About</NavItem> */}
       </ul>
       {user ? (
         <div className={STYLES.signedUser}>
-          <p>Welcome, {user.name}</p>
+          <p className={STYLES.welcomeText}>Welcome, {user.name}</p>
           {avatar && (
             <img
               src={avatar}

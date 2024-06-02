@@ -9,15 +9,13 @@ function UserSideBar() {
     "Sold Beats",
     "Purchased Beats",
     "Edit Profile",
-    "Change Profile Photo",
-    "Change Password",
-    "Settings",
   ];
 
   const navigate = useNavigate();
   const [selected, setSelected] = useState(() => {
     if (window.location.href.includes("/profile/user")) return 0;
     if (window.location.href.includes("/profile/beats")) return 1;
+    if (window.location.href.includes("/profile/beats/sold")) return 2;
   });
 
   function handleMenuNavigate(index) {
@@ -31,9 +29,13 @@ function UserSideBar() {
         navigate(`beats`);
         break;
       case 2:
-        return `/user/sold-beats`;
+        setSelected(2);
+        navigate(`beats/sold`);
+        break;
       case 3:
-        return `/user/purchased-beats`;
+        setSelected(3);
+        navigate(`beats/purchased`);
+        break;
       case 4:
         setSelected(4);
         navigate(`edit`);
@@ -52,11 +54,15 @@ function UserSideBar() {
   useEffect(() => {
     if (window.location.href.includes("/profile/user")) setSelected(0);
     if (window.location.href.includes("/profile/beats")) setSelected(1);
+    if (window.location.href.includes("/profile/beats/sold")) setSelected(2);
+    if (window.location.href.includes("/profile/beats/purchased"))
+      setSelected(3);
   }, [window.location.href]);
 
   return (
     <div className={STYLES.sideBar}>
       <div className={STYLES.buttons}>
+        <h3>Menu:</h3>
         {menus.map((menu, index) => (
           <div
             key={index}

@@ -10,7 +10,7 @@ import BeatPreviewCard from "./BeatPreviewCard";
 import AudioPlayer from "./AudioPlayer";
 import LoadingIndicator from "./LoadingIndicator";
 
-const Beats = () => {
+const Beats = ({ page }) => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
@@ -21,6 +21,19 @@ const Beats = () => {
   const [isThereBeats, setIsThereBeats] = useState(false);
   const [isBeatsLoading, setIsBeatsLoading] = useState(true);
 
+  function handlePageDependency() {
+    switch (page) {
+      case "user-beats":
+        return `${serverURLs.BEATS}/user/${user._id}`;
+      case "sold-beats":
+        return `${serverURLs.BEATS}/user/sold/${user._id}`;
+      case "purchased-beats":
+        return `${serverURLs.BEATS}/user/bought/${user._id}`;
+      default:
+        return `/beats/user/${user._id}`;
+    }
+  }
+
   function handleNavigateDetails(beatId) {
     navigate(`/beats/${beatId}`);
   }
@@ -29,7 +42,7 @@ const Beats = () => {
     function () {
       setIsBeatsLoading(true);
       async function fetchSong() {
-        const res = await fetch(`${serverURLs.BEATS}/user/${user._id}`);
+        const res = await fetch(handlePageDependency());
         const data = await res.json();
         const beats = data.data.beats;
         if (beats.length > 0) {
@@ -69,7 +82,7 @@ const Beats = () => {
               />
             ))
           ) : (
-            <h1 className="no-beats-message">You have no beats yet</h1>
+            <h1 className="no-beats-message">No beats found</h1>
           )
         ) : (
           <LoadingIndicator></LoadingIndicator>

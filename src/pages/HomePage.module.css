@@ -2,8 +2,9 @@
   font-size: 2rem;
   font-family: "Roboto Flex", sans-serif;
   font-weight: 500;
-  color: #0f4c75;
+  color: var(--primary-color);
   display: grid;
   justify-content: center;
   justify-items: center;
+  margin-top: 2rem;
 }

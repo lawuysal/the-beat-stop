@@ -38,6 +38,7 @@ function BeatDetailedPage() {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [isBeatLoading, setIsBeatLoading] = useState(true);
   const [isAddTrackMode, setIsAddTrackMode] = useState(false);
+  const [isBeatBuyer, setIsBeatBuyer] = useState(false);
   const [trackFile, setTrackFile] = useState(undefined);
   const [trackFileError, setTrackFileError] = useState({
     isValid: false,
@@ -154,6 +155,20 @@ function BeatDetailedPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user && beatId) {
+      fetch(`${serverURLs.PURCHASES}/is-buyer/${beatId}/${user._id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.isBuyer) {
+            setIsBeatBuyer(true);
+          } else {
+            setIsBeatBuyer(false);
+          }
+        });
+    }
+  }, [beatId, user]);
+
   if (isUserLoading) {
     return <LoadingIndicator></LoadingIndicator>;
   }
@@ -208,7 +223,7 @@ function BeatDetailedPage() {
                   <div className={STYLES.attributeWrapper}>
                     <p className={STYLES.attributeTitle}>STATUS</p>
                     <p className={STYLES.attributeValue}>
-                      {!beatState.paid ? "SOLD" : "AVALIABLE"}{" "}
+                      {beatState.paid ? "SOLD" : "AVALIABLE"}{" "}
                     </p>
                   </div>
                 </div>
@@ -233,16 +248,19 @@ function BeatDetailedPage() {
                 </p>
               </div>
               <div className={STYLES.otherSection}>
-                {user && user._id === beatState.owner ? (
+                <Button type="normal-button">Download Beat</Button>
+                {user && user._id === beatState.owner && !beatState.paid ? (
                   <>
                     <Button type="normal-button" submit={handleBeatEdit}>
                       Edit Beat
                     </Button>
-                    <Button type="normal-button">Download Beat</Button>
+
                     <Button type="outlined-button" submit={handleBeatDelete}>
                       Delete Beat
                     </Button>
                   </>
+                ) : beatState.paid ? (
+                  <></>
                 ) : (
                   <Button type="normal-button" submit={handleNavigateBuyPage}>
                     Buy Beat
@@ -254,20 +272,31 @@ function BeatDetailedPage() {
               <div className={STYLES.dividerHorizontal}></div>
             </div>
             <div className={STYLES.operations}>
-              <div className={STYLES.tracksWrapper}>
-                <p className={STYLES.attributeTitle}>
-                  TRACKS ( {beatState.tracks.length} )
-                </p>
-                {beatState.tracks[0] ? (
-                  beatState.tracks.map((e, i) => (
-                    <TrackCard trackId={e} beatId={beatState._id} key={i} />
-                  ))
-                ) : (
-                  <p>No tracks available</p>
-                )}
-              </div>
+              {isBeatBuyer ? (
+                <></>
+              ) : (
+                <div className={`${STYLES.tracksWrapper}`}>
+                  <p className={STYLES.attributeTitle}>
+                    TRACKS ( {beatState.tracks.length} )
+                  </p>
+                  {beatState.tracks[0] ? (
+                    beatState.tracks.map((e, i) => (
+                      <TrackCard
+                        trackId={e}
+                        beatId={beatState._id}
+                        key={i}
+                        isSold={beatState.paid}
+                      />
+                    ))
+                  ) : (
+                    <p>No tracks available</p>
+                  )}
+                </div>
+              )}
               <div className={STYLES.buttons}>
-                {!isAddTrackMode ? (
+                {isBeatBuyer || beatState.paid ? (
+                  <></>
+                ) : !isAddTrackMode ? (
                   <></>
                 ) : (
                   <>
@@ -283,15 +312,17 @@ function BeatDetailedPage() {
                   </>
                 )}
                 <div className={STYLES.addTrackSection}>
-                  {user && user._id === beatState.owner ? (
+                  {!(user && user._id === beatState.owner) ? (
+                    <></>
+                  ) : beatState.paid ? (
+                    <></>
+                  ) : (
                     <Button
                       type="normal-button"
                       submit={() => setIsAddTrackMode(!isAddTrackMode)}
                     >
                       {!isAddTrackMode ? "Add Track" : "Cancel"}
                     </Button>
-                  ) : (
-                    <></>
                   )}
                 </div>
               </div>

@@ -23,6 +23,8 @@ const UserDetailedPage = lazy(() => import("./pages/UserDetailedPage"));
 const UserEditPage = lazy(() => import("./pages/UserEditPage"));
 const QueryPage = lazy(() => import("./pages/QueryPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const SoldBeatsPage = lazy(() => import("./pages/SoldBeatsPage"));
+const PurchasedBeatsPage = lazy(() => import("./pages/PurchasedBeatsPage"));
 
 function App() {
   return (
@@ -105,6 +107,22 @@ function App() {
                 element={
                   <Suspense fallback={<LoadingIndicator />}>
                     <UserEditPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="beats/sold"
+                element={
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <SoldBeatsPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="beats/purchased"
+                element={
+                  <Suspense fallback={<LoadingIndicator />}>
+                    <PurchasedBeatsPage />
                   </Suspense>
                 }
               />

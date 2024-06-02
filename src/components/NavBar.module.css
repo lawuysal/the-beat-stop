@@ -38,3 +38,8 @@
   object-fit: cover;
   cursor: pointer;
 }
+
+.welcomeText {
+  font-weight: 500;
+  color: var(--primary-color);
+}
